@@ -837,3 +837,52 @@ textarea {
 .sonuc-listesi .onay-kutusu {
   margin-top: 1rem;
 }
+
+/* ---------- Katkı: teyit, itiraz, formlar ---------- */
+.teyit-alani {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.itiraz {
+  margin-top: 0.35rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 4px solid var(--sari-cizgi);
+  background: var(--sari-zemin);
+}
+
+.itiraz-baslik {
+  margin: 0;
+  font-weight: 700;
+  color: var(--sari-metin);
+}
+
+.itiraz .kriter-not {
+  color: var(--sari-metin);
+}
+
+.eylem-dugmeleri,
+.form-dugmeleri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.katki-formu {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #d5d7db;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.katki-formu h4 {
+  margin: 0 0 0.5rem;
+}
+
+.basari-mesaji:empty {
+  margin: 0;
+}

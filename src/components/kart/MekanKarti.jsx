@@ -5,6 +5,8 @@ import { girisleriSirala } from '../../lib/girisSirasi.js'
 import { mekanTuruEtiketi, nesneKriterleri } from '../../data/kriterler.js'
 import { METIN, tarihMetni } from '../../sabitler.js'
 import KriterSatiri from './KriterSatiri.jsx'
+import TeyitAlani from './TeyitAlani.jsx'
+import KartEylemleri from './KartEylemleri.jsx'
 
 function sonGuncelleme(mekan, dizin) {
   const tarihler = nesneKriterleri('mekan')
@@ -64,7 +66,7 @@ export default function MekanKarti() {
       </div>
 
       {mekan && (
-        <div className="kart-govde">
+        <div className="kart-govde" key={mekan.id}>
           <dl className="kart-bilgi">
             <div><dt>{METIN.kart.tur}</dt><dd>{mekanTuruEtiketi(mekan.tur)}</dd></div>
             <div><dt>{METIN.kart.bina}</dt><dd>{bina?.ad ?? '—'}</dd></div>
@@ -85,9 +87,14 @@ export default function MekanKarti() {
                   {i === 0 && puan > 0 && <span className="onerilen"> — {METIN.kart.onerilenGiris}</span>}
                 </h4>
                 <ul className="kriter-listesi">
-                  {nesneKriterleri('giris').map((k) => (
-                    <KriterSatiri key={k.anahtar} kriter={k} alan={dizin.alan('giris', giris.id, k.anahtar)} />
-                  ))}
+                  {nesneKriterleri('giris').map((k) => {
+                    const alan = dizin.alan('giris', giris.id, k.anahtar)
+                    return (
+                      <KriterSatiri key={k.anahtar} kriter={k} alan={alan}>
+                        <TeyitAlani nesne_turu="giris" nesne_id={giris.id} alan={alan} />
+                      </KriterSatiri>
+                    )
+                  })}
                 </ul>
               </article>
             ))}
@@ -96,21 +103,33 @@ export default function MekanKarti() {
           <section aria-labelledby="kart-fiziksel">
             <h3 id="kart-fiziksel">{METIN.kart.fiziksel}</h3>
             <ul className="kriter-listesi">
-              {nesneKriterleri('mekan', 'fiziksel').map((k) => (
-                <KriterSatiri key={k.anahtar} kriter={k} alan={dizin.alan('mekan', mekan.id, k.anahtar)} />
-              ))}
+              {nesneKriterleri('mekan', 'fiziksel').map((k) => {
+                const alan = dizin.alan('mekan', mekan.id, k.anahtar)
+                return (
+                  <KriterSatiri key={k.anahtar} kriter={k} alan={alan}>
+                    <TeyitAlani nesne_turu="mekan" nesne_id={mekan.id} alan={alan} />
+                  </KriterSatiri>
+                )
+              })}
             </ul>
           </section>
 
           <section aria-labelledby="kart-duyusal">
             <h3 id="kart-duyusal">{METIN.kart.duyusal}</h3>
             <ul className="kriter-listesi">
-              {nesneKriterleri('mekan', 'duyusal').map((k) => (
-                <KriterSatiri key={k.anahtar} kriter={k} alan={dizin.alan('mekan', mekan.id, k.anahtar)} />
-              ))}
+              {nesneKriterleri('mekan', 'duyusal').map((k) => {
+                const alan = dizin.alan('mekan', mekan.id, k.anahtar)
+                return (
+                  <KriterSatiri key={k.anahtar} kriter={k} alan={alan}>
+                    <TeyitAlani nesne_turu="mekan" nesne_id={mekan.id} alan={alan} />
+                  </KriterSatiri>
+                )
+              })}
             </ul>
             <p className="ipucu">{METIN.kart.gurultuNotu}</p>
           </section>
+
+          <KartEylemleri key={mekan.id} mekan={mekan} girisler={girisler.map((x) => x.giris)} />
         </div>
       )}
     </aside>

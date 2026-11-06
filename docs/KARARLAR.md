@@ -31,3 +31,9 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Giriş filtrelerinde bina girişi hiç yoksa sonuç "Bilgi eksik"tir; tüm girişler doğrulanmış şekilde sağlamıyorsa "Uygun değil".
 - Liste görünümüne geçince harita kaldırılır; haritaya dönünce zoom varsayılana döner.
 - `src/lib/kriterler.test.js`, kriterler.js'deki seçeneklerin migration'daki `gecerli_kriter()` ile aynı olduğunu denetler.
+- Bildirim formu kartın içinde açılır; hedef olarak mekânın kendisi veya binanın girişlerinden biri seçilir. Kriter ve seçenekler kriterler.js'den gelir.
+- "Hatalı bilgi bildir" serbest metindir ve kartın mekânına bağlanır (`nesne_turu = 'mekan'`).
+- "Teyit et" düğmesi, teyitsiz değerle aynı değere sahip bekleyen bir bildirim varsa çıkar; ekipten gelen teyitsiz değerde düğme yoktur.
+- Kullanıcı kendi bildiriminde düğme yerine "Bu bildirimi siz yaptınız" notunu, daha önce teyit ettiği bildirimde "Teyit ettiniz" notunu görür.
+- Teyit ya da bildirim sonrası sonuç metni satırda/canlı bölgede gösterilir ve odak oraya taşınır (değer doğrulanınca düğme kalkar, odak kaybolmasın diye).
+- Bildirim sonrası mesaj, gönderim anındaki alan durumuna göre seçilir (yeni / zaten doğrulanmış / itiraz).
