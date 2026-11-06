@@ -19,20 +19,20 @@ delete from public.binalar;
 
 insert into public.binalar (id, ad, enlem, boylam, notlar, olusturma) overriding system value values
   (1, 'ÖRNEK – Ana Bina', 38.738, 35.4736, 'Örnek veri; gerçek bina değildir.', '2026-11-02T10:00:00+03:00'),
-  (2, 'ÖRNEK – Kafe Binası', 38.7369, 35.4722, 'Örnek veri; gerçek bina değildir.', '2026-11-02T10:00:00+03:00');
+  (2, 'ÖRNEK – Kafe Binası', 38.7366, 35.4718, 'Örnek veri; gerçek bina değildir.', '2026-11-02T10:00:00+03:00');
 
 insert into public.girisler (id, bina_id, ad, enlem, boylam, olusturma) overriding system value values
-  (1, 1, 'ÖRNEK – Kuzey kapısı', 38.73815, 35.47355, '2026-11-02T10:00:00+03:00'),
-  (2, 1, 'ÖRNEK – Güney kapısı', 38.73782, 35.4737, '2026-11-02T10:00:00+03:00'),
-  (3, 2, 'ÖRNEK – Ön kapı', 38.73702, 35.47212, '2026-11-02T10:00:00+03:00'),
-  (4, 2, 'ÖRNEK – Yan kapı', 38.73684, 35.47236, '2026-11-02T10:00:00+03:00');
+  (1, 1, 'ÖRNEK – Kuzey kapısı', 38.7387, 35.4738, '2026-11-02T10:00:00+03:00'),
+  (2, 1, 'ÖRNEK – Güney kapısı', 38.7373, 35.4739, '2026-11-02T10:00:00+03:00'),
+  (3, 2, 'ÖRNEK – Ön kapı', 38.737, 35.4723, '2026-11-02T10:00:00+03:00'),
+  (4, 2, 'ÖRNEK – Yan kapı', 38.736, 35.4712, '2026-11-02T10:00:00+03:00');
 
 insert into public.mekanlar (id, bina_id, ad, tur, kat, enlem, boylam, foto_url, olusturma) overriding system value values
-  (1, 1, 'ÖRNEK – Kütüphane', 'kutuphane', 1, 38.73806, 35.47342, null, '2026-11-02T10:00:00+03:00'),
-  (2, 1, 'ÖRNEK – Çalışma Salonu', 'calisma_salonu', 2, 38.73798, 35.47374, null, '2026-11-02T10:00:00+03:00'),
-  (3, 1, 'ÖRNEK – Yemekhane', 'yemekhane', 0, 38.73789, 35.47348, null, '2026-11-02T10:00:00+03:00'),
-  (4, 2, 'ÖRNEK – Kafe', 'kafe', 0, 38.73694, 35.47216, null, '2026-11-02T10:00:00+03:00'),
-  (5, 2, 'ÖRNEK – Toplantı Odası', 'diger', 1, 38.73686, 35.47226, null, '2026-11-02T10:00:00+03:00');
+  (1, 1, 'ÖRNEK – Kütüphane', 'kutuphane', 1, 38.7384, 35.4729, null, '2026-11-02T10:00:00+03:00'),
+  (2, 1, 'ÖRNEK – Çalışma Salonu', 'calisma_salonu', 2, 38.738, 35.4744, null, '2026-11-02T10:00:00+03:00'),
+  (3, 1, 'ÖRNEK – Yemekhane', 'yemekhane', 0, 38.73755, 35.473, null, '2026-11-02T10:00:00+03:00'),
+  (4, 2, 'ÖRNEK – Kafe', 'kafe', 0, 38.7368, 35.4712, null, '2026-11-02T10:00:00+03:00'),
+  (5, 2, 'ÖRNEK – Toplantı Odası', 'diger', 1, 38.7362, 35.4724, null, '2026-11-02T10:00:00+03:00');
 
 insert into public.alanlar (id, nesne_turu, nesne_id, alan_adi, deger, durum, kaynak, olcum_zamani, guncelleme) overriding system value values
   (1, 'giris', 1, 'giris_turu', 'ana', 'dogrulanmis', 'ekip', null, '2026-11-02T10:00:00+03:00'),

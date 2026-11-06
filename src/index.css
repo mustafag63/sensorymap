@@ -1,13 +1,29 @@
+/* Renkler WCAG 2.2 AA'ya göre seçildi (metin ≥ 4.5:1). */
 :root {
-  --header-bg: #1f3a5f;
-  --header-fg: #ffffff;
-  --focus: #ffbf47;
+  --lacivert: #1f3a5f;
+  --mavi: #0b4f9c;
+  --metin: #1a1a1a;
+  --ikincil-metin: #4a4a4a;
+  --zemin: #ffffff;
+  --zemin-gri: #f3f4f6;
+  --cizgi: #8a8f98;
+  --odak: #ffbf47;
+
+  --yesil-zemin: #dcf3e1;
+  --yesil-metin: #0d5a22;
+  --sari-zemin: #fff4c2;
+  --sari-metin: #5a4300;
+  --sari-cizgi: #8a6d00;
+  --gri-zemin: #ececec;
+  --gri-metin: #333333;
+
   --header-height: 3.5rem;
+  --panel-genislik: 26rem;
 
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #ffffff;
+  color: var(--metin);
+  background: var(--zemin);
 }
 
 *,
@@ -23,6 +39,19 @@ body,
   height: 100%;
 }
 
+a {
+  color: var(--mavi);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.25;
+}
+
+/* ---------- Düzen ---------- */
 .app-layout {
   display: flex;
   flex-direction: column;
@@ -31,58 +60,126 @@ body,
 }
 
 .app-header {
-  flex: 0 0 var(--header-height);
+  flex: 0 0 auto;
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0 1rem;
   padding: 0 1rem;
-  background: var(--header-bg);
-  color: var(--header-fg);
+  background: var(--lacivert);
+  color: #fff;
 }
 
 .app-title {
-  margin: 0;
+  color: #fff;
   font-size: 1.25rem;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.ana-menu {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ana-menu a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.6rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.ana-menu a[aria-current='page'] {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 3px;
 }
 
 .app-main {
   flex: 1 1 auto;
   min-height: 0;
+  overflow: auto;
+  position: relative;
 }
 
 .app-main:focus {
   outline: none;
 }
 
-.campus-map {
-  width: 100%;
-  height: 100%;
+.app-footer {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.25rem 1rem;
+  background: var(--zemin-gri);
+  font-size: 0.875rem;
 }
 
-/* Görünür odak göstergesi (WCAG 2.4.7 / 2.4.11) */
-:focus-visible,
-.leaflet-container a:focus-visible,
-.leaflet-container:focus-visible {
-  outline: 3px solid var(--focus);
+.app-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.ornek-mod {
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  background: var(--sari-zemin);
+  color: var(--sari-metin);
+  border: 1px solid var(--sari-cizgi);
+  border-radius: 4px;
+}
+
+.metin-sayfasi {
+  max-width: 70ch;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.durum-mesaji {
+  margin: 1rem;
+}
+
+.hata-mesaji {
+  color: #8b1a1a;
+}
+
+.basari-mesaji {
+  color: var(--yesil-metin);
+}
+
+.ikincil {
+  color: var(--ikincil-metin);
+}
+
+/* ---------- Odak ve yardımcılar ---------- */
+:focus-visible {
+  outline: 3px solid var(--metin);
   outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--odak);
 }
 
-/* Yakınlaştırma düğmeleri: en az 24x24 px hedef (WCAG 2.5.8) */
-.leaflet-touch .leaflet-bar a,
-.leaflet-bar a {
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
-  font-size: 1.4rem;
+.app-header :focus-visible {
+  outline-color: #fff;
 }
 
 .skip-link {
   position: absolute;
   left: 0.5rem;
   top: -100px;
-  z-index: 2000;
+  z-index: 3000;
   padding: 0.5rem 1rem;
-  background: var(--focus);
+  background: var(--odak);
   color: #000;
   font-weight: 700;
 }
@@ -103,9 +200,348 @@ body,
   border: 0;
 }
 
+/* ---------- Düğmeler ve formlar ---------- */
+.dugme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 1rem;
+  border: 2px solid var(--mavi);
+  border-radius: 6px;
+  background: var(--mavi);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dugme-ikincil {
+  background: #fff;
+  color: var(--mavi);
+}
+
+.dugme:disabled,
+.dugme[aria-disabled='true'] {
+  border-color: var(--cizgi);
+  background: var(--zemin-gri);
+  color: var(--ikincil-metin);
+  cursor: not-allowed;
+}
+
+.dugme-kucuk {
+  min-height: 44px;
+  padding: 0 0.6rem;
+  font-size: 0.875rem;
+}
+
+.form-alani {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-alani label,
+.form-alani legend {
+  font-weight: 600;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+input[type='datetime-local'],
+select,
+textarea {
+  min-height: 44px;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid var(--cizgi);
+  border-radius: 6px;
+  font: inherit;
+  color: var(--metin);
+  background: #fff;
+}
+
+textarea {
+  min-height: 6rem;
+}
+
+.onay-kutusu {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.onay-kutusu input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.ipucu {
+  font-size: 0.875rem;
+  color: var(--ikincil-metin);
+  margin: 0;
+}
+
+/* ---------- Durum rozetleri (renk + ikon + metin) ---------- */
+.rozet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.45rem;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.rozet-ikon {
+  font-weight: 700;
+}
+
+.rozet-veri_yok {
+  background: var(--gri-zemin);
+  color: var(--gri-metin);
+  border-color: #767676;
+}
+
+.rozet-teyitsiz {
+  background: var(--sari-zemin);
+  color: var(--sari-metin);
+  border-color: var(--sari-cizgi);
+}
+
+.rozet-dogrulanmis {
+  background: var(--yesil-zemin);
+  color: var(--yesil-metin);
+  border-color: #1d7a35;
+}
+
+/* ---------- Harita sayfası ---------- */
+.harita-sayfasi {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.harita-alani {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+}
+
+.harita-kapsayici {
+  position: absolute;
+  inset: 0;
+}
+
+.campus-map {
+  width: 100%;
+  height: 100%;
+}
+
+.harita-ipucu {
+  position: absolute;
+  left: 50%;
+  bottom: 1.75rem;
+  transform: translateX(-50%);
+  z-index: 900;
+  margin: 0;
+  padding: 0.3rem 0.75rem;
+  max-width: calc(100% - 2rem);
+  background: rgb(255 255 255 / 0.95);
+  border: 1px solid var(--cizgi);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Yakınlaştırma düğmeleri: 44 px dokunma hedefi */
+.leaflet-touch .leaflet-bar a,
+.leaflet-bar a {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 1.4rem;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  width: 44px;
+  height: 44px;
+  font-size: 1.5rem;
+  line-height: 44px;
+}
+
+.leaflet-container {
+  font: inherit;
+}
+
+/* İşaretçiler: kök (odaklanan öğe) içeriği kadar büyür ve noktaya ortalanır.
+   Leaflet konumu `transform` ile verdiği için ortalama ayrı `translate` özelliğiyle yapılır. */
+.leaflet-marker-icon.isaret-kok {
+  width: max-content !important;
+  height: auto !important;
+  translate: -50% -50%;
+  background: none;
+  border: none;
+  border-radius: 6px;
+}
+
+.isaret {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 32px;
+  padding: 0.15rem 0.5rem;
+  border: 2px solid var(--mavi);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--mavi);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+  cursor: pointer;
+}
+
+
+.isaret-bina {
+  background: var(--lacivert);
+  border-color: var(--lacivert);
+  color: #fff;
+}
+
+.isaret-rozet {
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--lacivert);
+}
+
+.isaret-giris {
+  min-height: 30px;
+  padding: 0.15rem 0.3rem;
+  border-color: var(--metin);
+  border-radius: 999px;
+  color: var(--metin);
+}
+
+.isaret-giris.basamaksiz {
+  background: var(--yesil-metin);
+  border-color: var(--yesil-metin);
+  color: #fff;
+}
+
+/* Filtre sonucu: Uygun = dolu, Bilgi eksik = kesikli kenar, Uygun değil = soluk */
+.isaret.sonuc-uygun {
+  background: var(--yesil-metin);
+  border: 2px solid var(--yesil-metin);
+  color: #fff;
+}
+
+.isaret.sonuc-uygun .isaret-rozet {
+  color: var(--yesil-metin);
+}
+
+.isaret.sonuc-eksik {
+  background: #fff;
+  border: 3px dashed var(--sari-cizgi);
+  color: var(--metin);
+}
+
+.isaret.sonuc-eksik .isaret-rozet {
+  background: var(--sari-zemin);
+  color: var(--sari-metin);
+}
+
+.isaret.sonuc-uygun_degil {
+  background: #eeeeee;
+  border: 1px solid #9a9a9a;
+  color: #444;
+  box-shadow: none;
+  font-weight: 400;
+}
+
+.isaret.sonuc-uygun_degil .isaret-rozet {
+  background: #fff;
+  color: #444;
+}
+
+.leaflet-marker-icon:has(.sonuc-uygun_degil) {
+  z-index: 0 !important;
+}
+
+/* Popup'lar */
+.bina-popup h3,
+.giris-popup h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.bina-popup-sayi {
+  margin: 0 0 0.5rem;
+}
+
+.kat-grubu h5 {
+  margin: 0.5rem 0 0.15rem;
+  font-size: 0.875rem;
+}
+
+.kat-grubu ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.kat-grubu li {
+  min-height: 32px;
+  padding: 0.15rem 0;
+}
+
+.bina-popup .dugme {
+  margin-top: 0.5rem;
+}
+
+.kriter-listesi {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kriter-listesi > li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.kriter-listesi.kompakt > li {
+  padding: 0.2rem 0;
+}
+
+.kriter-etiket {
+  font-weight: 600;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+
   .leaflet-zoom-anim .leaflet-zoom-animated,
-  .leaflet-fade-anim .leaflet-tile {
+  .leaflet-fade-anim .leaflet-tile,
+  .leaflet-fade-anim .leaflet-popup {
     transition: none !important;
   }
 }

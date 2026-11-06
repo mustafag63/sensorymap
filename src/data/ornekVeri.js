@@ -28,22 +28,22 @@ function a(nesne_turu, nesne_id, alan_adi, deger, durum, ek = {}) {
 export const ornekVeri = {
   binalar: [
     { id: 1, ad: 'ÖRNEK – Ana Bina', enlem: 38.738, boylam: 35.4736, notlar: 'Örnek veri; gerçek bina değildir.', olusturma: EKIP_TARIHI },
-    { id: 2, ad: 'ÖRNEK – Kafe Binası', enlem: 38.7369, boylam: 35.4722, notlar: 'Örnek veri; gerçek bina değildir.', olusturma: EKIP_TARIHI },
+    { id: 2, ad: 'ÖRNEK – Kafe Binası', enlem: 38.7366, boylam: 35.4718, notlar: 'Örnek veri; gerçek bina değildir.', olusturma: EKIP_TARIHI },
   ],
 
   girisler: [
-    { id: 1, bina_id: 1, ad: 'ÖRNEK – Kuzey kapısı', enlem: 38.73815, boylam: 35.47355, olusturma: EKIP_TARIHI },
-    { id: 2, bina_id: 1, ad: 'ÖRNEK – Güney kapısı', enlem: 38.73782, boylam: 35.4737, olusturma: EKIP_TARIHI },
-    { id: 3, bina_id: 2, ad: 'ÖRNEK – Ön kapı', enlem: 38.73702, boylam: 35.47212, olusturma: EKIP_TARIHI },
-    { id: 4, bina_id: 2, ad: 'ÖRNEK – Yan kapı', enlem: 38.73684, boylam: 35.47236, olusturma: EKIP_TARIHI },
+    { id: 1, bina_id: 1, ad: 'ÖRNEK – Kuzey kapısı', enlem: 38.7387, boylam: 35.4738, olusturma: EKIP_TARIHI },
+    { id: 2, bina_id: 1, ad: 'ÖRNEK – Güney kapısı', enlem: 38.7373, boylam: 35.4739, olusturma: EKIP_TARIHI },
+    { id: 3, bina_id: 2, ad: 'ÖRNEK – Ön kapı', enlem: 38.737, boylam: 35.4723, olusturma: EKIP_TARIHI },
+    { id: 4, bina_id: 2, ad: 'ÖRNEK – Yan kapı', enlem: 38.736, boylam: 35.4712, olusturma: EKIP_TARIHI },
   ],
 
   mekanlar: [
-    { id: 1, bina_id: 1, ad: 'ÖRNEK – Kütüphane', tur: 'kutuphane', kat: 1, enlem: 38.73806, boylam: 35.47342, foto_url: null, olusturma: EKIP_TARIHI },
-    { id: 2, bina_id: 1, ad: 'ÖRNEK – Çalışma Salonu', tur: 'calisma_salonu', kat: 2, enlem: 38.73798, boylam: 35.47374, foto_url: null, olusturma: EKIP_TARIHI },
-    { id: 3, bina_id: 1, ad: 'ÖRNEK – Yemekhane', tur: 'yemekhane', kat: 0, enlem: 38.73789, boylam: 35.47348, foto_url: null, olusturma: EKIP_TARIHI },
-    { id: 4, bina_id: 2, ad: 'ÖRNEK – Kafe', tur: 'kafe', kat: 0, enlem: 38.73694, boylam: 35.47216, foto_url: null, olusturma: EKIP_TARIHI },
-    { id: 5, bina_id: 2, ad: 'ÖRNEK – Toplantı Odası', tur: 'diger', kat: 1, enlem: 38.73686, boylam: 35.47226, foto_url: null, olusturma: EKIP_TARIHI },
+    { id: 1, bina_id: 1, ad: 'ÖRNEK – Kütüphane', tur: 'kutuphane', kat: 1, enlem: 38.7384, boylam: 35.4729, foto_url: null, olusturma: EKIP_TARIHI },
+    { id: 2, bina_id: 1, ad: 'ÖRNEK – Çalışma Salonu', tur: 'calisma_salonu', kat: 2, enlem: 38.738, boylam: 35.4744, foto_url: null, olusturma: EKIP_TARIHI },
+    { id: 3, bina_id: 1, ad: 'ÖRNEK – Yemekhane', tur: 'yemekhane', kat: 0, enlem: 38.73755, boylam: 35.473, foto_url: null, olusturma: EKIP_TARIHI },
+    { id: 4, bina_id: 2, ad: 'ÖRNEK – Kafe', tur: 'kafe', kat: 0, enlem: 38.7368, boylam: 35.4712, foto_url: null, olusturma: EKIP_TARIHI },
+    { id: 5, bina_id: 2, ad: 'ÖRNEK – Toplantı Odası', tur: 'diger', kat: 1, enlem: 38.7362, boylam: 35.4724, foto_url: null, olusturma: EKIP_TARIHI },
   ],
 
   alanlar: [

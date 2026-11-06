@@ -15,3 +15,9 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - `supabase/seed.sql` elle yazılmaz; `npm run seed` ile `src/data/ornekVeri.js`'ten üretilir ve trigger'ları seed süresince kapatır.
 - Supabase'de anonim kimlik yalnızca ilk yazma işleminde (bildirim/teyit) açılır; salt gezinti hesap oluşturmaz.
 - Hata bildirimi oturum açmadan da gönderilebilir (anonim kimlik gerekmez).
+- Yönlendirme için `react-router` (BrowserRouter) kullanılır; Vercel'de doğrudan link açılabilsin diye `vercel.json` tüm yolları `index.html`'e yönlendirir.
+- Haritada "Basamaksız" ikonu yalnızca `basamaksiz = var` **doğrulanmış** girişlerde gösterilir; teyitsiz değer popup'ta rozetle görünür.
+- Bina işaretçisinin filtre vurgusu, binadaki mekânların en iyi sonucudur (biri uygunsa bina "uygun" görünür).
+- Giriş işaretçisine tıklanınca girişin kriterlerini rozetleriyle gösteren bir popup açılır (SPEC'te giriş tıklaması tanımlı değil).
+- Bina popup'ına "Yakınlaştır" düğmesi eklendi: tek adımda zoom 18'e geçip mekânları gösterir.
+- Örnek koordinatlar işaretçiler zoom 18'de çakışmasın diye 40–100 m aralıklarla yayıldı.
