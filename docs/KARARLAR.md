@@ -1,0 +1,17 @@
+# Kararlar
+
+SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
+
+- `kat`, `alanlar`'da bir kriter değil `mekanlar.kat` sütunudur; ekip girdiği için eşleşmede doğrulanmış sayılır.
+- Çok biçimli `nesne_id` için yabancı anahtar yok; nesne varlığı bildirim trigger'ında denetlenir, silmede trigger temizler.
+- Anonim oturumlar da `authenticated` rolünde olduğu için ekip yetkisi `ekip_uyeleri` tablosu ve `ekip_mi()` ile ayrılır.
+- Bekleyen bildirimler herkese `bekleyen_bildirimler()` RPC'siyle, `anonim_id` gizlenerek gösterilir (kartta "Teyit et" ve itiraz notu için gerekli).
+- Teyitsiz bir alana yeni bildirim gelirse alan son bildirimin değerini gösterir; eski bildirim yine 2 teyit alırsa doğrulanır.
+- Doğrulanmış değerle aynı değeri bildiren bildirim hemen `dogrulandi` olur; teyit beklemez.
+- Ekipten "Yerinde doğrulandı" işaretsiz girilen değer `teyitsiz` olur; bunun bir bildirimi olmadığı için kullanıcılar ancak aynı değeri bildirerek teyit sürecini başlatabilir.
+- `bildirimler.durum` iki değerlidir: `bekliyor`, `dogrulandi`.
+- Sayısal kriterler (`kapi_genisligi_cm`, `ic_kapi_cm`) `alanlar.deger` içinde metin olarak (0–999) tutulur.
+- `foto_url` yalnızca `https://` ile başlayabilir.
+- `supabase/seed.sql` elle yazılmaz; `npm run seed` ile `src/data/ornekVeri.js`'ten üretilir ve trigger'ları seed süresince kapatır.
+- Supabase'de anonim kimlik yalnızca ilk yazma işleminde (bildirim/teyit) açılır; salt gezinti hesap oluşturmaz.
+- Hata bildirimi oturum açmadan da gönderilebilir (anonim kimlik gerekmez).

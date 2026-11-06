@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed": "node scripts/seed-olustur.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "leaflet": "^1.9.4",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
