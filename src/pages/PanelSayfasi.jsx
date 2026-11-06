@@ -2,6 +2,7 @@ import { useEffect, useId, useState } from 'react'
 import { ekipCikisi, ekipGirisi, ekipOturumu, ornekVeriModu } from '../lib/veri.js'
 import { useVeri } from '../lib/veriBaglami.js'
 import { METIN } from '../sabitler.js'
+import { useSayfaBasligi } from '../lib/useSayfaBasligi.js'
 import KayitFormu from '../components/panel/KayitFormu.jsx'
 import { BekleyenListesi, HataListesi } from '../components/panel/PanelListeleri.jsx'
 
@@ -102,6 +103,7 @@ function KayitDuzenleyici() {
 const BOLUMLER = ['kayitlar', 'hatalar', 'bekleyen']
 
 export default function PanelSayfasi() {
+  useSayfaBasligi(METIN.panel.baslik)
   const { dizin } = useVeri()
   const [oturum, setOturum] = useState(null)
   const [bolum, setBolum] = useState('kayitlar')

@@ -9,7 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "seed": "node scripts/seed-olustur.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "ekran": "node scripts/ekran-goruntuleri.mjs",
+    "klavye": "node scripts/klavye-akisi.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",

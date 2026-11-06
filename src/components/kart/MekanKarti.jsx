@@ -7,6 +7,7 @@ import { METIN, tarihMetni } from '../../sabitler.js'
 import KriterSatiri from './KriterSatiri.jsx'
 import TeyitAlani from './TeyitAlani.jsx'
 import KartEylemleri from './KartEylemleri.jsx'
+import { useSayfaBasligi } from '../../lib/useSayfaBasligi.js'
 
 function sonGuncelleme(mekan, dizin) {
   const tarihler = nesneKriterleri('mekan')
@@ -41,16 +42,25 @@ export default function MekanKarti() {
     return () => document.removeEventListener('keydown', tus)
   }, [navigate, search])
 
+  // Kart açıkken açan öğe yeniden çizilmiş olabilir (ör. teyitten sonra mekân başka
+  // sonuç grubuna geçti); o zaman aynı mekânın linkine, o da yoksa içeriğe dönülür.
+  const sonId = useRef(id)
+  useEffect(() => {
+    sonId.current = id
+  }, [id])
   useEffect(
     () => () => {
-      if (acan?.isConnected && acan !== document.body) acan.focus()
-      else document.getElementById('icerik')?.focus()
+      const yedek = document.querySelector(`a[href="/mekan/${sonId.current}"], a[href^="/mekan/${sonId.current}?"]`)
+      const hedef = acan?.isConnected && acan !== document.body ? acan : yedek
+      ;(hedef ?? document.getElementById('icerik'))?.focus()
     },
     [acan],
   )
 
+  const mekan = dizin?.mekan(Number(id))
+  useSayfaBasligi(mekan?.ad ?? (dizin ? METIN.kart.bulunamadi : null))
+
   if (!dizin) return null
-  const mekan = dizin.mekan(Number(id))
   const bina = mekan && dizin.bina(mekan.bina_id)
   const girisler = mekan ? girisleriSirala(dizin.girisleri(mekan.bina_id), dizin) : []
 

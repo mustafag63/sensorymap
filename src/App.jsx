@@ -5,6 +5,8 @@ import HaritaSayfasi from './pages/HaritaSayfasi.jsx'
 import BulunamadiSayfasi from './pages/BulunamadiSayfasi.jsx'
 import MekanKarti from './components/kart/MekanKarti.jsx'
 import PanelSayfasi from './pages/PanelSayfasi.jsx'
+import HakkindaSayfasi from './pages/HakkindaSayfasi.jsx'
+import GizlilikSayfasi from './pages/GizlilikSayfasi.jsx'
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
             <Route path="/" element={<HaritaSayfasi />}>
               <Route path="mekan/:id" element={<MekanKarti />} />
             </Route>
+            <Route path="hakkinda" element={<HakkindaSayfasi />} />
+            <Route path="gizlilik" element={<GizlilikSayfasi />} />
             <Route path="panel" element={<PanelSayfasi />} />
             <Route path="*" element={<BulunamadiSayfasi />} />
           </Route>

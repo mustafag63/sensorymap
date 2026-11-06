@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { METIN } from '../../sabitler.js'
 import BildirimFormu from './BildirimFormu.jsx'
 import HataFormu from './HataFormu.jsx'
+import SesOlcumu from './SesOlcumu.jsx'
 
 export default function KartEylemleri({ mekan, girisler }) {
   const [acik, setAcik] = useState(null) // 'bildirim' | 'hata' | null
@@ -47,6 +48,7 @@ export default function KartEylemleri({ mekan, girisler }) {
           {METIN.kart.hataBildir}
         </button>
       </div>
+      <SesOlcumu />
       <p className="basari-mesaji" role="status">
         {mesaj}
       </p>

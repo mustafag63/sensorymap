@@ -628,13 +628,28 @@ textarea {
 
 .kriter-ust {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  /* Uzun değer (ör. açık saatler) etiketi ezmesin: değer sütunu da kırılabilir. */
+  grid-template-columns: minmax(8rem, 1fr) minmax(0, max-content) auto;
   align-items: center;
   gap: 0.25rem 0.5rem;
 }
 
 .kriter-deger {
   font-weight: 600;
+  text-align: right;
+}
+
+/* Serbest metin değerleri etiketin altında, tam genişlikte */
+.kriter-ust.uzun-deger {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.kriter-ust.uzun-deger .kriter-etiket {
+  grid-column: 1 / -1;
+}
+
+.kriter-ust.uzun-deger .kriter-deger {
+  text-align: left;
 }
 
 .kriter-uyari,
@@ -671,6 +686,26 @@ textarea {
 
   .kriter-ust {
     grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .kriter-deger {
+    text-align: left;
+  }
+
+  /* Alt bilgi tek satır: not daralıp kırılır, link yanında kalır. */
+  .app-footer {
+    flex-wrap: nowrap;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .ornek-mod {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 0.75rem;
+  }
+
+  .app-footer a {
+    flex: 0 0 auto;
   }
 
   .kriter-ust .kriter-etiket {
@@ -1018,4 +1053,41 @@ textarea {
   .kriter-duzenleyici .form-alani {
     grid-column: auto;
   }
+}
+
+/* ---------- Metin sayfaları ve ses ölçümü ---------- */
+.durum-aciklamalari {
+  padding: 0;
+  list-style: none;
+}
+
+.durum-aciklamalari li {
+  padding: 0.25rem 0;
+}
+
+.ekip-listesi {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.ekip-listesi div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+}
+
+.ekip-listesi dt {
+  font-weight: 700;
+}
+
+.ekip-listesi dd {
+  margin: 0;
+}
+
+.ses-olcumu {
+  margin-top: 0.75rem;
+}
+
+.ses-olcumu .ipucu {
+  margin-top: 0.25rem;
 }

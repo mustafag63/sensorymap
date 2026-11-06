@@ -19,8 +19,9 @@ export default function HaritaSayfasi() {
   const hepsi = params.get('hepsi') === '1'
 
   // Açık kart kapanmasın diye yol korunur; virgüller okunaklı kalsın diye kodlanmaz.
+  // Parametreler çağrı anında okunur: hızlı ardışık tıklamada render'daki eski değer kullanılmasın.
   const guncelle = (degisiklik) => {
-    const p = new URLSearchParams(params)
+    const p = new URLSearchParams(window.location.search)
     for (const [k, v] of Object.entries(degisiklik)) {
       if (v) p.set(k, v)
       else p.delete(k)
@@ -30,7 +31,8 @@ export default function HaritaSayfasi() {
   }
 
   const degistir = (anahtar) => {
-    const yeni = filtreler.includes(anahtar) ? filtreler.filter((x) => x !== anahtar) : [...filtreler, anahtar]
+    const simdiki = filtreleriCoz(new URLSearchParams(window.location.search).get('f'))
+    const yeni = simdiki.includes(anahtar) ? simdiki.filter((x) => x !== anahtar) : [...simdiki, anahtar]
     guncelle({ f: filtreleriCoz(yeni.join(',')).join(',') })
   }
 
@@ -75,9 +77,10 @@ export default function HaritaSayfasi() {
           ) : (
             <Harita dizin={dizin} sonuclar={sonuclar} />
           )}
+          {/* Kart, filtre çubuğunu örtmesin diye yalnızca harita/liste alanında açılır. */}
+          <Outlet />
         </div>
       )}
-      <Outlet />
     </div>
   )
 }

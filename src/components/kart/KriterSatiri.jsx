@@ -10,7 +10,7 @@ export default function KriterSatiri({ kriter, alan, children }) {
 
   return (
     <li className="kriter-satiri">
-      <div className="kriter-ust">
+      <div className={`kriter-ust${kriter.tip === 'metin' ? ' uzun-deger' : ''}`}>
         <span className="kriter-etiket">{kriter.etiket}</span>
         <span className="kriter-deger">{metin ?? '—'}</span>
         <DurumRozeti durum={durumu(alan)} />

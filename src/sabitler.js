@@ -85,6 +85,7 @@ export const METIN = {
     hataBildir: 'Hatalı bilgi bildir',
     sesOlc: 'Ortam sesini ölç',
     sesOlcAciklama: 'Bu özellik 4. haftada eklenecek.',
+    sesOlcBolum: 'Ortam sesi',
   },
 
   bildirim: {
@@ -173,8 +174,41 @@ export const METIN = {
     bilinmeyen: 'Beklenmeyen bir hata oluştu.',
   },
 
-  hakkinda: { baslik: 'Hakkında' },
-  gizlilik: { baslik: 'Gizlilik' },
+  hakkinda: {
+    baslik: 'Hakkında',
+    amacBaslik: 'Proje',
+    amac:
+      'SensoryMap, AGÜ Sümer Kampüsü’ndeki mekânların fiziksel (rampa, asansör, basamaksız giriş) ve duyusal (gürültü, ışık, oturma yoğunluğu) özelliklerini harita üzerinde gösteren bir öğrenci projesidir (GLB 300, Grup 3). Amaç, bir mekâna gitmeden önce ortamın nasıl olduğunu görebilmektir.',
+    durumBaslik: 'Bilgiler nasıl doğrulanır?',
+    durumlar: {
+      dogrulanmis: 'Ekip yerinde kontrol etti ya da başka iki kişi aynı bilgiyi teyit etti.',
+      teyitsiz: 'Bir kişi bildirdi, henüz teyit edilmedi.',
+      veri_yok: 'Bu konuda henüz bilgi yok.',
+    },
+    eslesmeNotu: 'Filtrelerde yalnızca doğrulanmış bilgiler “Uygun Eşleşme” sayılır; eksik ya da teyit edilmemiş bilgisi olan mekânlar ayrı bir grupta gösterilir.',
+    sinirlilikBaslik: 'Sınırlılıklar',
+    sinirliliklar: [
+      'SensoryMap tıbbi bir araç değildir; sağlıkla ilgili bir öneri ya da değerlendirme sunmaz.',
+      'Telefon desibelmetre değildir. Gürültü bilgisi yaklaşık bir aralık olarak (sessiz / orta / gürültülü) gösterilir.',
+      'Gürültü ve oturma yoğunluğu günün saatine göre değişir; gösterilen değer ölçüm zamanındaki durumdur.',
+      'Bilgiler ekip ve kullanıcı katkılarına dayanır; zamanla eskiyebilir. Hatalı bilgi görürseniz mekân kartından bildirebilirsiniz.',
+      'Teyitler anonim bir tarayıcı kimliğiyle yapılır. Tarayıcı verisi silinince yeni kimlik oluşur; bu yüzden teyit sistemi kötüye kullanıma karşı tamamen korunaklı değildir.',
+      'Kriter listesi şimdilik temsilidir; ekip tarafından kesinleştirilecektir.',
+    ],
+    ekipBaslik: 'Ekip',
+    ekip: [
+      ['Mustafa', 'Web ve harita'],
+      ['Ali Buğrahan', 'Ses modülü'],
+      ['Nergis Zeynep', 'Mekân kriterleri'],
+      ['Sena Nur', 'Eşikler ve gizlilik'],
+      ['Furkan', 'Test ve koordinasyon'],
+    ],
+    haritaVerisi: 'Harita verisi © OpenStreetMap katkıcıları.',
+  },
+  gizlilik: {
+    baslik: 'Gizlilik',
+    yerTutucu: 'Gizlilik metni hazırlanıyor ve yakında burada yayımlanacak.',
+  },
   bulunamadi: { baslik: 'Sayfa bulunamadı', geri: 'Haritaya dön' },
 }
 

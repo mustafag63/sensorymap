@@ -43,3 +43,9 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Panelde yalnızca değiştirilen kriterler kaydedilir; değer boşaltılırsa alan `veri_yok` olur. "Yerinde doğrulandı" değer seçilmeden işaretlenemez.
 - Ölçüm zamanı tarayıcının yerel saatiyle girilir ve ISO (UTC) olarak saklanır.
 - Supabase'de giriş yapan hesap `ekip_uyeleri`'nde değilse panel "ekip üyesi değil" uyarısı ve çıkış düğmesi gösterir.
+- "Ortam sesini ölç" düğmesi `disabled` yerine `aria-disabled` ile devre dışıdır; klavye ve ekran okuyucu "4. haftada eklenecek" açıklamasına ulaşabilsin diye.
+- Kart masaüstünde filtre çubuğunun altında, yalnızca harita/liste alanında açılır; mobilde alttan açılan panel alt bilgiyi örter.
+- Kart kapanınca açan öğe artık yoksa (ör. teyitten sonra mekân başka sonuç grubuna geçti) odak aynı mekânın linkine döner.
+- Filtre/görünüm düğmeleri URL'yi çağrı anındaki `window.location`'dan okur; hızlı ardışık tıklamalarda seçim kaybolmaz.
+- Ekran görüntüleri ve klavye testi `playwright-core` + sistemdeki Chrome ile alınır; ayrı tarayıcı indirilmez.
+- Her sayfa kendi `<title>`'ını ayarlar (açık kartta mekân adı).
