@@ -10,7 +10,7 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Doğrulanmış değerle aynı değeri bildiren bildirim hemen `dogrulandi` olur; teyit beklemez.
 - Ekipten "Yerinde doğrulandı" işaretsiz girilen değer `teyitsiz` olur; bunun bir bildirimi olmadığı için kullanıcılar ancak aynı değeri bildirerek teyit sürecini başlatabilir.
 - `bildirimler.durum` iki değerlidir: `bekliyor`, `dogrulandi`.
-- Sayısal kriterler (`kapi_genisligi_cm`, `ic_kapi_cm`) `alanlar.deger` içinde metin olarak (0–999) tutulur.
+- Sayısal kriterler `alanlar.deger` içinde metin olarak tutulur: en fazla 3 basamak ve 2 ondalık, nokta ile (ör. `1.3`); kartta Türkçe biçimde ("1,3 cm", "%9,5") gösterilir.
 - `foto_url` yalnızca `https://` ile başlayabilir.
 - `supabase/seed.sql` elle yazılmaz; `npm run seed` ile `src/data/ornekVeri.js`'ten üretilir ve trigger'ları seed süresince kapatır.
 - Supabase'de anonim kimlik yalnızca ilk yazma işleminde (bildirim/teyit) açılır; salt gezinti hesap oluşturmaz.
@@ -22,7 +22,7 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Bina popup'ına "Yakınlaştır" düğmesi eklendi: tek adımda zoom 18'e geçip mekânları gösterir.
 - Örnek koordinatlar işaretçiler zoom 18'de çakışmasın diye 40–100 m aralıklarla yayıldı.
 - Kart, veri olmayan kriterleri de "– Veri yok" rozetiyle listeler; neyin eksik olduğu görünür olsun diye.
-- "Önerilen giriş" puanı: basamaksız (4) + uygun rampa (2) + otomatik kapı (1) − acil çıkış (1); teyitsiz bilgi yarım puan alır, puanı 0 olan giriş "önerilen" diye etiketlenmez.
+- ~~"Önerilen giriş" puanı~~ → Nergis'in listesiyle değişti, aşağıya bakın.
 - Kart, yan panel/bottom sheet olarak harita üzerinde açılır ve modal değildir (odak kapanı yok); Esc ve "Kapat" haritaya döner, odak kartı açan öğeye geri verilir.
 - Mobil kırılım noktası 700 px'tir.
 - "Harita / Liste" geçişi ikisinden birini gösterir (yan yana değil); seçim URL'de `g=liste`, "Uygun olmayanları da göster" `hepsi=1` olarak saklanır. Filtreler `?f=` içinde virgülle, kodlanmadan yazılır.
@@ -49,3 +49,40 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Filtre/görünüm düğmeleri URL'yi çağrı anındaki `window.location`'dan okur; hızlı ardışık tıklamalarda seçim kaybolmaz.
 - Ekran görüntüleri ve klavye testi `playwright-core` + sistemdeki Chrome ile alınır; ayrı tarayıcı indirilmez.
 - Her sayfa kendi `<title>`'ını ayarlar (açık kartta mekân adı).
+
+## Nergis Zeynep'in kesin kriter listesi (2026-11-06)
+
+`docs/kriterler-nergis.md` repoya eklenmediği için güncelleme, bu listenin özetine ve eşleştirme kararlarına dayanarak yapıldı. Dosya eklenince karşılaştırılmalı.
+
+**Değişen kriterler**
+- Giriş: `giris_turu` → ana / yan / erisilebilir_alternatif (acil_cikis kalktı).
+- Kapı: tek alan bölündü → `kapi_tipi` (otomatik / elle) + `kapi_acilma` (kolay / agir) + `esik_cm` (sayı, ≤ 1,3 uygun). Döner kapı seçeneği kalktı.
+- Rampa: tek `rampa` alanı → `rampa_var` (var / yok / gerek_yok) + `rampa_durumu` (uygun / cok_dik / onu_kapali) + `rampa_genislik_cm` (≥ 100 uygun) + `rampa_egim_yuzde`.
+- Asansör: tek `asansor` alanı → `asansor_var` + `asansor_calisiyor` + `asansor_tekerlekli` + `asansor_kabin` (metin, ör. "110x140") + `asansor_kapi_cm`.
+- Işık: tek `isik` alanı → `gun_isigi` + `yapay_isik` (led / floresan / diger) + `acik_floresan` + `dogal_aydinlik_alan`. "Loş" seçeneği kalktı.
+- Müzik: yok / dusuk / yuksek → var / yok.
+- Oturma: `mobilya_duzeni` (acik / sik_dizilmis) ve `alternatif_oturma` (var / yok) eklendi; filtreye girmez, kartta bilgi olarak gösterilir.
+- Gürültü: `alanlar.olcum_cihazi` sütunu eklendi.
+
+**Filtreler**
+- "Rampa var": (rampa_var = var VE rampa_durumu = uygun) VEYA basamaksiz = var olan doğrulanmış giriş.
+- "Asansörle ulaşılabilir": kat = 0 VEYA (asansor_var = var VE asansor_calisiyor = evet VE asansor_tekerlekli = uygun).
+- "Doğal ışık" artık `gun_isigi = var`a bakar; `dogal_aydinlik_alan` filtreye girmez.
+- Yeni filtre: "Açıkta floresan yok" (`acik_floresan = yok`).
+- Filtre koşulları artık "alternatifler (VEYA) içinde koşullar (VE)" yapısında. VE grubunda doğrulanmış tek bir "hayır" (ör. rampa önü kapalı, asansör çalışmıyor) o alternatifi kesin olarak düşürür; doğrulanmamış bir koşul varsa sonuç "Bilgi eksik"tir.
+
+**Uygulama kararları**
+- Migration'lar henüz hiçbir veritabanına uygulanmadığı için yeni migration yazılmadı, mevcut dosyalar yerinde güncellendi. Supabase'e uygulandıktan sonraki değişiklikler yeni migration dosyalarıyla yapılacak.
+- Önerilen giriş sırası: doğrulanmış basamaksız → doğrulanmış (rampa_var = var ve rampa_durumu = uygun) → diğerleri; grup içinde kayıt sırası korunur. İstendiği gibi en üstteki giriş her zaman "Önerilen giriş" olarak işaretlenir (hiçbir giriş ilk iki gruba girmese bile).
+- Bağlı alanlar: rampa ayrıntıları `rampa_var = var`, asansör ayrıntıları `asansor_var = var` değilse kartta ve giriş popup'ında gizlenir. Üst alan bilinmiyorsa ya da bağlı alanın kendi verisi varsa gösterilir.
+- Sınır dışı sayılar kartta uyarıyla gösterilir: eşik > 1,3 cm, kapı / asansör kapısı / mekân kapısı < 90 cm, rampa genişliği < 100 cm.
+- `olcum_cihazi` seçenekleri `ses_modulu` (telefon) ve `spl_metre` olarak varsayıldı (SPEC'teki "ses modülü veya SPL metre" ifadesinden); Nergis'in listesinde seçenekler belirtilmemişti. Kullanıcı bildirimlerinde boş kalır, ekip panelden girer.
+- Nergis'in listesinde karar kuralı belirtilmeyen alanlar için SPEC §2'de "Belirlenecek" yazıldı (kapi_tipi, kapi_acilma, gun_isigi, acik_floresan, dogal_aydinlik_alan, mobilya_duzeni, alternatif_oturma). Eski SPEC'teki kurallar karşılığı olan alanlara taşındı (eşik, rampa eğimi, TS EN 81-70 asansör ölçüleri).
+- Örnek veri: Güney kapısının rampası var ama önü kapalı; Çalışma Salonu'nun asansörü çalışıyor ama tekerlekli sandalyeye uygun değil, açıkta floresan bilgisi teyitsiz (bekleyen bildirimi ve 1 teyidi var). Kafe'de gün ışığına itiraz var.
+- Klavye testi artık "Açıkta floresan yok" filtresi → Çalışma Salonu → açıkta floresan bilgisini teyit et akışını dener.
+
+**Açık sorular (Nergis'e soruldu, yanıt bekleniyor)**
+- **Açık soru:** Rampa girişe mi bağlı, mekâna mı? Şimdilik girişin özelliği olarak tutuluyor.
+- **Açık soru:** "Clear interior door width" (`ic_kapi_cm`) binanın giriş kapısını mı, mekânın kendi kapısını mı kastediyor? Şimdilik mekânın kapısı; giriş kapısı ayrıca `kapi_genisligi_cm`.
+- **Açık soru:** `gun_isigi` ile `dogal_aydinlik_alan` arasındaki fark ne? Şimdilik: `gun_isigi` = mekânda gün ışığı var; `dogal_aydinlik_alan` = gün ışığı alan ayrı bir bölüm var. İkisi de tutuluyor, filtre yalnızca `gun_isigi`na bakıyor.
+- Ayrıca sorulacak: Görev listesindeki Google Forms formu bu listeye dönüşecek mi, ne zaman hazır olur?

@@ -23,6 +23,6 @@ export const ekipOturumu = ilet('ekipOturumu') // → { girisYapildi, ekip, epos
 export const ekipGirisi = ilet('ekipGirisi') // (eposta, sifre)
 export const ekipCikisi = ilet('ekipCikisi')
 export const kayitKaydet = ilet('kayitKaydet') // (tablo: 'binalar'|'girisler'|'mekanlar', kayit) → kayıt
-export const alanKaydet = ilet('alanKaydet') // ({ nesne_turu, nesne_id, alan_adi, deger, yerinde, olcum_zamani })
+export const alanKaydet = ilet('alanKaydet') // ({ nesne_turu, nesne_id, alan_adi, deger, yerinde, olcum_zamani, olcum_cihazi })
 export const hataBildirimleriGetir = ilet('hataBildirimleriGetir')
 export const hataCozuldu = ilet('hataCozuldu') // (id)

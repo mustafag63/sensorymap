@@ -1091,3 +1091,20 @@ textarea {
 .ses-olcumu .ipucu {
   margin-top: 0.25rem;
 }
+
+.olcum-alanlari {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+}
+
+.olcum-alanlari .form-alani {
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .olcum-alanlari {
+    grid-column: auto;
+  }
+}

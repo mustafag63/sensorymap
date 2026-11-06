@@ -22,7 +22,10 @@ function baslangicKriterleri(nesne, mevcut, dizin) {
   return Object.fromEntries(
     nesneKriterleri(nesne).map((k) => {
       const a = mevcut ? dizin.alan(nesne, mevcut.id, k.anahtar) : null
-      return [k.anahtar, { deger: a?.deger ?? '', yerinde: a?.durum === 'dogrulanmis', olcum_zamani: yerelSaat(a?.olcum_zamani) }]
+      return [
+        k.anahtar,
+        { deger: a?.deger ?? '', yerinde: a?.durum === 'dogrulanmis', olcum_zamani: yerelSaat(a?.olcum_zamani), olcum_cihazi: a?.olcum_cihazi ?? '' },
+      ]
     }),
   )
 }
@@ -88,7 +91,8 @@ export default function KayitFormu({ tablo, mevcut, kaydedildi }) {
           alan_adi: k.anahtar,
           deger: s.deger.trim(),
           yerinde: s.yerinde,
-          olcum_zamani: k.olcumZamani ? isoSaat(s.olcum_zamani) : null,
+          olcum_zamani: k.olcum ? isoSaat(s.olcum_zamani) : null,
+          olcum_cihazi: k.olcum ? s.olcum_cihazi || null : null,
         })
       }
       await yenile()

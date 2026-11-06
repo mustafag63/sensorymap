@@ -84,7 +84,7 @@ export async function kayitKaydet(tablo, kayit) {
   return sonuc(sorgu.select().single())
 }
 
-export async function alanKaydet({ nesne_turu, nesne_id, alan_adi, deger, yerinde, olcum_zamani }) {
+export async function alanKaydet({ nesne_turu, nesne_id, alan_adi, deger, yerinde, olcum_zamani, olcum_cihazi }) {
   const bos = deger == null || deger === ''
   await sonuc(
     supabase.from('alanlar').upsert(
@@ -96,6 +96,7 @@ export async function alanKaydet({ nesne_turu, nesne_id, alan_adi, deger, yerind
         durum: bos ? 'veri_yok' : yerinde ? 'dogrulanmis' : 'teyitsiz',
         kaynak: bos ? null : 'ekip',
         olcum_zamani: bos ? null : (olcum_zamani ?? null),
+        olcum_cihazi: bos ? null : (olcum_cihazi ?? null),
         guncelleme: new Date().toISOString(),
       },
       { onConflict: 'nesne_turu,nesne_id,alan_adi' },

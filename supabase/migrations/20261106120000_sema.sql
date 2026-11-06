@@ -2,7 +2,7 @@
 -- Kişisel veri YOK: isim, e-posta, yaş, tanı, sağlık bilgisi veya konum geçmişi tutulmaz.
 
 -- ---------------------------------------------------------------
--- Kriter doğrulaması (SPEC §2). src/data/kriterler.js ile aynı liste;
+-- Kriter doğrulaması (SPEC §2, Nergis'in kesin listesi). src/data/kriterler.js ile aynı liste;
 -- değişince ikisi birlikte güncellenir.
 -- ---------------------------------------------------------------
 create function public.gecerli_kriter(p_nesne_turu text, p_alan text, p_deger text)
@@ -13,24 +13,38 @@ set search_path = ''
 as $$
   select case p_nesne_turu
     when 'giris' then case p_alan
-      when 'giris_turu'        then p_deger in ('ana', 'yan', 'acil_cikis')
+      when 'giris_turu'        then p_deger in ('ana', 'yan', 'erisilebilir_alternatif')
       when 'basamaksiz'        then p_deger in ('var', 'yok')
-      when 'rampa'             then p_deger in ('uygun', 'var_ama_dik', 'yok', 'gerek_yok')
-      when 'kapi_genisligi_cm' then p_deger ~ '^[0-9]{1,3}$'
-      when 'kapi_tipi'         then p_deger in ('otomatik', 'el_ile_hafif', 'el_ile_agir', 'doner')
+      when 'esik_cm'           then p_deger ~ '^[0-9]{1,3}(\.[0-9]{1,2})?$'
+      when 'kapi_genisligi_cm' then p_deger ~ '^[0-9]{1,3}(\.[0-9]{1,2})?$'
+      when 'kapi_tipi'         then p_deger in ('otomatik', 'elle')
+      when 'kapi_acilma'       then p_deger in ('kolay', 'agir')
       when 'acik_saatler'      then char_length(btrim(p_deger)) >= 1 and char_length(p_deger) <= 200
+      when 'rampa_var'         then p_deger in ('var', 'yok', 'gerek_yok')
+      when 'rampa_durumu'      then p_deger in ('uygun', 'cok_dik', 'onu_kapali')
+      when 'rampa_genislik_cm' then p_deger ~ '^[0-9]{1,3}(\.[0-9]{1,2})?$'
+      when 'rampa_egim_yuzde'  then p_deger ~ '^[0-9]{1,3}(\.[0-9]{1,2})?$'
       else false
     end
     when 'mekan' then case p_alan
-      when 'asansor'         then p_deger in ('var_calisiyor', 'var_calismiyor', 'yok', 'gerek_yok')
-      when 'ic_kapi_cm'      then p_deger ~ '^[0-9]{1,3}$'
-      when 'erisilebilir_wc' then p_deger in ('var', 'yok')
-      when 'gurultu_yogun'   then p_deger in ('sessiz', 'orta', 'gurultulu')
-      when 'gurultu_sakin'   then p_deger in ('sessiz', 'orta', 'gurultulu')
-      when 'isik'            then p_deger in ('dogal', 'led', 'floresan', 'los')
-      when 'oturma'          then p_deger in ('seyrek', 'orta', 'sik')
-      when 'sessiz_alan'     then p_deger in ('var', 'yok')
-      when 'muzik'           then p_deger in ('yok', 'dusuk', 'yuksek')
+      when 'asansor_var'         then p_deger in ('var', 'yok', 'gerek_yok')
+      when 'asansor_calisiyor'   then p_deger in ('evet', 'hayir')
+      when 'asansor_tekerlekli'  then p_deger in ('uygun', 'uygun_degil')
+      when 'asansor_kabin'       then char_length(btrim(p_deger)) >= 1 and char_length(p_deger) <= 200
+      when 'asansor_kapi_cm'     then p_deger ~ '^[0-9]{1,3}(\.[0-9]{1,2})?$'
+      when 'ic_kapi_cm'          then p_deger ~ '^[0-9]{1,3}(\.[0-9]{1,2})?$'
+      when 'erisilebilir_wc'     then p_deger in ('var', 'yok')
+      when 'gurultu_yogun'       then p_deger in ('sessiz', 'orta', 'gurultulu')
+      when 'gurultu_sakin'       then p_deger in ('sessiz', 'orta', 'gurultulu')
+      when 'muzik'               then p_deger in ('var', 'yok')
+      when 'gun_isigi'           then p_deger in ('var', 'yok')
+      when 'yapay_isik'          then p_deger in ('led', 'floresan', 'diger')
+      when 'acik_floresan'       then p_deger in ('var', 'yok')
+      when 'dogal_aydinlik_alan' then p_deger in ('var', 'yok')
+      when 'oturma'              then p_deger in ('seyrek', 'orta', 'sik')
+      when 'mobilya_duzeni'      then p_deger in ('acik', 'sik_dizilmis')
+      when 'sessiz_alan'         then p_deger in ('var', 'yok')
+      when 'alternatif_oturma'   then p_deger in ('var', 'yok')
       else false
     end
     else false
@@ -45,9 +59,12 @@ immutable
 set search_path = ''
 as $$
   select case p_nesne_turu
-    when 'giris' then p_alan in ('giris_turu', 'basamaksiz', 'rampa', 'kapi_genisligi_cm', 'kapi_tipi', 'acik_saatler')
-    when 'mekan' then p_alan in ('asansor', 'ic_kapi_cm', 'erisilebilir_wc', 'gurultu_yogun', 'gurultu_sakin',
-                                 'isik', 'oturma', 'sessiz_alan', 'muzik')
+    when 'giris' then p_alan in ('giris_turu', 'basamaksiz', 'esik_cm', 'kapi_genisligi_cm', 'kapi_tipi', 'kapi_acilma',
+                                 'acik_saatler', 'rampa_var', 'rampa_durumu', 'rampa_genislik_cm', 'rampa_egim_yuzde')
+    when 'mekan' then p_alan in ('asansor_var', 'asansor_calisiyor', 'asansor_tekerlekli', 'asansor_kabin', 'asansor_kapi_cm',
+                                 'ic_kapi_cm', 'erisilebilir_wc', 'gurultu_yogun', 'gurultu_sakin', 'muzik', 'gun_isigi',
+                                 'yapay_isik', 'acik_floresan', 'dogal_aydinlik_alan', 'oturma', 'mobilya_duzeni',
+                                 'sessiz_alan', 'alternatif_oturma')
     else false
   end;
 $$;
@@ -100,6 +117,7 @@ create table public.alanlar (
   durum        text not null default 'veri_yok' check (durum in ('veri_yok', 'teyitsiz', 'dogrulanmis')),
   kaynak       text check (kaynak in ('ekip', 'kullanici')),
   olcum_zamani timestamptz,  -- gürültü günün saatine göre değiştiği için
+  olcum_cihazi text check (olcum_cihazi in ('ses_modulu', 'spl_metre')),  -- gürültüyü ölçen cihaz
   guncelleme   timestamptz not null default now(),
   unique (nesne_turu, nesne_id, alan_adi),
   check (public.gecerli_kriter_anahtari(nesne_turu, alan_adi)),

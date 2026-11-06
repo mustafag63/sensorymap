@@ -3,24 +3,31 @@
 // teyitsiz veya eksik değer her zaman "eksik" sayılır ve asla "Uygun Eşleşme" vermez.
 import { FILTRELER, filtreBul } from '../data/kriterler.js'
 
+// Birden çok sonucu birleştirir. VE: biri sağlamıyorsa sağlamaz, hepsi sağlıyorsa sağlar.
+// VEYA: biri sağlıyorsa sağlar, hepsi sağlamıyorsa sağlamaz. Geri kalan her durum "eksik".
+function birlestir(sonuclar, mantik) {
+  const kesin = mantik === 've' ? 'saglamaz' : 'saglar'
+  if (sonuclar.some((s) => s.sonuc === kesin)) return { sonuc: kesin }
+  if (sonuclar.every((s) => s.sonuc !== 'eksik')) return { sonuc: mantik === 've' ? 'saglar' : 'saglamaz' }
+  return { sonuc: 'eksik', durum: sonuclar.some((s) => s.durum === 'teyitsiz') ? 'teyitsiz' : 'veri_yok' }
+}
+
+function kosulSonucu({ alan, degerler }, oku) {
+  const a = oku(alan)
+  const durum = a?.durum ?? 'veri_yok'
+  if (durum !== 'dogrulanmis') return { sonuc: 'eksik', durum }
+  return { sonuc: degerler.includes(a.deger) ? 'saglar' : 'saglamaz' }
+}
+
 /**
- * Tek bir nesnenin (giriş ya da mekân) koşullarını VEYA ile değerlendirir.
+ * Tek bir nesnenin (giriş ya da mekân) sonucu: alternatifler VEYA, her alternatifin koşulları VE.
  * @returns {{ sonuc: 'saglar'|'saglamaz'|'eksik', durum?: 'teyitsiz'|'veri_yok' }}
  */
 function nesneSonucu(kosullar, oku) {
-  let hepsiSaglamaz = true
-  let teyitsizVar = false
-  for (const { alan, degerler } of kosullar) {
-    const a = oku(alan)
-    const durum = a?.durum ?? 'veri_yok'
-    if (durum === 'dogrulanmis') {
-      if (degerler.includes(a.deger)) return { sonuc: 'saglar' }
-    } else {
-      hepsiSaglamaz = false
-      if (durum === 'teyitsiz') teyitsizVar = true
-    }
-  }
-  return hepsiSaglamaz ? { sonuc: 'saglamaz' } : { sonuc: 'eksik', durum: teyitsizVar ? 'teyitsiz' : 'veri_yok' }
+  return birlestir(
+    kosullar.map((alternatif) => birlestir(alternatif.map((kosul) => kosulSonucu(kosul, oku)), 've')),
+    'veya',
+  )
 }
 
 // 'kat' mekanlar tablosunun sütunudur; ekip girdiği için doğrulanmış sayılır.
@@ -34,10 +41,10 @@ export function filtreSonucu(filtre, mekan, dizin) {
 
   const girisler = dizin.girisleri(mekan.bina_id)
   if (girisler.length === 0) return { sonuc: 'eksik', durum: 'veri_yok' }
-  const sonuclar = girisler.map((g) => nesneSonucu(filtre.kosullar, (alan) => dizin.alan('giris', g.id, alan)))
-  if (sonuclar.some((s) => s.sonuc === 'saglar')) return { sonuc: 'saglar' }
-  if (sonuclar.every((s) => s.sonuc === 'saglamaz')) return { sonuc: 'saglamaz' }
-  return { sonuc: 'eksik', durum: sonuclar.some((s) => s.durum === 'teyitsiz') ? 'teyitsiz' : 'veri_yok' }
+  return birlestir(
+    girisler.map((g) => nesneSonucu(filtre.kosullar, (alan) => dizin.alan('giris', g.id, alan))),
+    'veya',
+  )
 }
 
 /**

@@ -1,24 +1,21 @@
-// Kartta "Binaya nasıl girilir" sırası: en erişilebilir giriş üstte (saf fonksiyon).
-const PUAN = {
-  basamaksiz: { var: 4 },
-  rampa: { uygun: 2 },
-  kapi_tipi: { otomatik: 1 },
-  giris_turu: { acil_cikis: -1 },
+// Kartta "Binaya nasıl girilir" sırası (saf fonksiyon):
+// 1. doğrulanmış basamaksız, 2. doğrulanmış uygun rampalı, 3. diğerleri. Grup içinde sıra korunur.
+
+const dogrulanmis = (dizin, giris, alan, deger) => {
+  const a = dizin.alan('giris', giris.id, alan)
+  return a?.durum === 'dogrulanmis' && a.deger === deger
 }
 
-export function girisPuani(giris, dizin) {
-  let puan = 0
-  for (const [alanAdi, degerler] of Object.entries(PUAN)) {
-    const alan = dizin.alan('giris', giris.id, alanAdi)
-    if (!alan || alan.durum === 'veri_yok' || !(alan.deger in degerler)) continue
-    // Teyitsiz bilgi yarım puan alır; doğrulanmış giriş her zaman önde.
-    puan += alan.durum === 'dogrulanmis' ? degerler[alan.deger] : degerler[alan.deger] / 2
-  }
-  return puan
+export function girisSirasi(giris, dizin) {
+  if (dogrulanmis(dizin, giris, 'basamaksiz', 'var')) return 0
+  if (dogrulanmis(dizin, giris, 'rampa_var', 'var') && dogrulanmis(dizin, giris, 'rampa_durumu', 'uygun')) return 1
+  return 2
 }
 
+/** @returns {Array<{ giris, sira: 0|1|2, onerilen: boolean }>} En üstteki "Önerilen giriş"tir. */
 export function girisleriSirala(girisler, dizin) {
   return girisler
-    .map((g) => ({ giris: g, puan: girisPuani(g, dizin) }))
-    .sort((a, b) => b.puan - a.puan)
+    .map((giris) => ({ giris, sira: girisSirasi(giris, dizin) }))
+    .sort((a, b) => a.sira - b.sira)
+    .map((x, i) => ({ ...x, onerilen: i === 0 }))
 }

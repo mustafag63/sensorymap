@@ -49,7 +49,7 @@ function alanBul(nesne_turu, nesne_id, alan_adi) {
 function alanYaz(nesne_turu, nesne_id, alan_adi, degisiklik) {
   let alan = alanBul(nesne_turu, nesne_id, alan_adi)
   if (!alan) {
-    alan = { id: yeniId('alanlar'), nesne_turu, nesne_id, alan_adi, deger: null, durum: 'veri_yok', kaynak: null, olcum_zamani: null }
+    alan = { id: yeniId('alanlar'), nesne_turu, nesne_id, alan_adi, deger: null, durum: 'veri_yok', kaynak: null, olcum_zamani: null, olcum_cihazi: null }
     db.alanlar.push(alan)
   }
   Object.assign(alan, degisiklik, { guncelleme: simdi() })
@@ -89,7 +89,7 @@ export async function bildirimGonder({ nesne_turu, nesne_id, alan_adi, deger }) 
   const mevcut = alanBul(nesne_turu, nesne_id, alan_adi)
   if (!mevcut || mevcut.durum !== 'dogrulanmis') {
     alanYaz(nesne_turu, nesne_id, alan_adi, {
-      deger, durum: 'teyitsiz', kaynak: 'kullanici', olcum_zamani: gurultuMu(alan_adi) ? bildirim.tarih : null,
+      deger, durum: 'teyitsiz', kaynak: 'kullanici', olcum_zamani: gurultuMu(alan_adi) ? bildirim.tarih : null, olcum_cihazi: null,
     })
   } else if (mevcut.deger === deger) {
     bildirim.durum = 'dogrulandi'
@@ -109,7 +109,7 @@ export async function teyitEt(bildirimId) {
   if (db.teyitler.filter((t) => t.bildirim_id === b.id).length >= 2) {
     b.durum = 'dogrulandi'
     alanYaz(b.nesne_turu, b.nesne_id, b.alan_adi, {
-      deger: b.deger, durum: 'dogrulanmis', kaynak: 'kullanici', olcum_zamani: gurultuMu(b.alan_adi) ? b.tarih : null,
+      deger: b.deger, durum: 'dogrulanmis', kaynak: 'kullanici', olcum_zamani: gurultuMu(b.alan_adi) ? b.tarih : null, olcum_cihazi: null,
     })
   }
 }
@@ -143,7 +143,7 @@ export async function kayitKaydet(tablo, kayit) {
   return kopya(yeni)
 }
 
-export async function alanKaydet({ nesne_turu, nesne_id, alan_adi, deger, yerinde, olcum_zamani }) {
+export async function alanKaydet({ nesne_turu, nesne_id, alan_adi, deger, yerinde, olcum_zamani, olcum_cihazi }) {
   const bos = deger == null || deger === ''
   if (!bos && !gecerliDeger(nesne_turu, alan_adi, deger)) throw hata('gecersizDeger')
   alanYaz(nesne_turu, nesne_id, alan_adi, {
@@ -151,6 +151,7 @@ export async function alanKaydet({ nesne_turu, nesne_id, alan_adi, deger, yerind
     durum: bos ? 'veri_yok' : yerinde ? 'dogrulanmis' : 'teyitsiz',
     kaynak: bos ? null : 'ekip',
     olcum_zamani: bos ? null : (olcum_zamani ?? null),
+    olcum_cihazi: bos ? null : (olcum_cihazi ?? null),
   })
 }
 

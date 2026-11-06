@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import { useVeri } from '../../lib/veriBaglami.js'
 import { girisleriSirala } from '../../lib/girisSirasi.js'
-import { mekanTuruEtiketi, nesneKriterleri } from '../../data/kriterler.js'
+import { kriterGorunur, mekanTuruEtiketi, nesneKriterleri } from '../../data/kriterler.js'
 import { METIN, tarihMetni } from '../../sabitler.js'
 import KriterSatiri from './KriterSatiri.jsx'
 import TeyitAlani from './TeyitAlani.jsx'
@@ -90,14 +90,16 @@ export default function MekanKarti() {
           <section aria-labelledby="kart-giris">
             <h3 id="kart-giris">{METIN.kart.nasilGirilir}</h3>
             {girisler.length === 0 && <p>{METIN.kart.girisYok}</p>}
-            {girisler.map(({ giris, puan }, i) => (
+            {girisler.map(({ giris, onerilen }) => (
               <article key={giris.id} className="giris-blogu" aria-labelledby={`giris-${giris.id}`}>
                 <h4 id={`giris-${giris.id}`}>
                   {giris.ad}
-                  {i === 0 && puan > 0 && <span className="onerilen"> — {METIN.kart.onerilenGiris}</span>}
+                  {onerilen && <span className="onerilen"> — {METIN.kart.onerilenGiris}</span>}
                 </h4>
                 <ul className="kriter-listesi">
-                  {nesneKriterleri('giris').map((k) => {
+                  {nesneKriterleri('giris')
+                    .filter((k) => kriterGorunur(k, (ad) => dizin.alan('giris', giris.id, ad)))
+                    .map((k) => {
                     const alan = dizin.alan('giris', giris.id, k.anahtar)
                     return (
                       <KriterSatiri key={k.anahtar} kriter={k} alan={alan}>
@@ -113,7 +115,9 @@ export default function MekanKarti() {
           <section aria-labelledby="kart-fiziksel">
             <h3 id="kart-fiziksel">{METIN.kart.fiziksel}</h3>
             <ul className="kriter-listesi">
-              {nesneKriterleri('mekan', 'fiziksel').map((k) => {
+              {nesneKriterleri('mekan', 'fiziksel')
+                .filter((k) => kriterGorunur(k, (ad) => dizin.alan('mekan', mekan.id, ad)))
+                .map((k) => {
                 const alan = dizin.alan('mekan', mekan.id, k.anahtar)
                 return (
                   <KriterSatiri key={k.anahtar} kriter={k} alan={alan}>
@@ -127,7 +131,9 @@ export default function MekanKarti() {
           <section aria-labelledby="kart-duyusal">
             <h3 id="kart-duyusal">{METIN.kart.duyusal}</h3>
             <ul className="kriter-listesi">
-              {nesneKriterleri('mekan', 'duyusal').map((k) => {
+              {nesneKriterleri('mekan', 'duyusal')
+                .filter((k) => kriterGorunur(k, (ad) => dizin.alan('mekan', mekan.id, ad)))
+                .map((k) => {
                 const alan = dizin.alan('mekan', mekan.id, k.anahtar)
                 return (
                   <KriterSatiri key={k.anahtar} kriter={k} alan={alan}>

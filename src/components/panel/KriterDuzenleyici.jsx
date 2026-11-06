@@ -1,7 +1,8 @@
 import { useId } from 'react'
+import { OLCUM_CIHAZLARI } from '../../data/kriterler.js'
 import { METIN } from '../../sabitler.js'
 
-/** Bir kriter için değer + "Yerinde doğrulandı" (+ gürültüde ölçüm zamanı). */
+/** Bir kriter için değer + "Yerinde doğrulandı" (+ gürültüde ölçüm zamanı ve cihazı). */
 export default function KriterDuzenleyici({ kriter, satir, degistir }) {
   const kimlik = useId()
   const guncelle = (ek) => degistir({ ...satir, ...ek })
@@ -20,7 +21,7 @@ export default function KriterDuzenleyici({ kriter, satir, degistir }) {
     )
   } else if (kriter.tip === 'sayi') {
     girdi = (
-      <input id={kimlik} type="number" min="0" max="999" step="1" value={satir.deger} onChange={(e) => guncelle({ deger: e.target.value })} />
+      <input id={kimlik} type="number" min="0" max="999" step="0.01" value={satir.deger} onChange={(e) => guncelle({ deger: e.target.value })} />
     )
   } else {
     girdi = <input id={kimlik} type="text" maxLength={200} value={satir.deger} onChange={(e) => guncelle({ deger: e.target.value })} />
@@ -42,16 +43,34 @@ export default function KriterDuzenleyici({ kriter, satir, degistir }) {
         />
         {METIN.panel.yerinde}
       </label>
-      {kriter.olcumZamani && (
-        <div className="form-alani">
-          <label htmlFor={`${kimlik}-olcum`}>{METIN.panel.olcumZamani}</label>
-          <input
-            id={`${kimlik}-olcum`}
-            type="datetime-local"
-            value={satir.olcum_zamani}
-            disabled={satir.deger === ''}
-            onChange={(e) => guncelle({ olcum_zamani: e.target.value })}
-          />
+      {kriter.olcum && (
+        <div className="olcum-alanlari">
+          <div className="form-alani">
+            <label htmlFor={`${kimlik}-olcum`}>{METIN.panel.olcumZamani}</label>
+            <input
+              id={`${kimlik}-olcum`}
+              type="datetime-local"
+              value={satir.olcum_zamani}
+              disabled={satir.deger === ''}
+              onChange={(e) => guncelle({ olcum_zamani: e.target.value })}
+            />
+          </div>
+          <div className="form-alani">
+            <label htmlFor={`${kimlik}-cihaz`}>{METIN.panel.olcumCihazi}</label>
+            <select
+              id={`${kimlik}-cihaz`}
+              value={satir.olcum_cihazi}
+              disabled={satir.deger === ''}
+              onChange={(e) => guncelle({ olcum_cihazi: e.target.value })}
+            >
+              <option value="">{METIN.panel.cihazBilinmiyor}</option>
+              {OLCUM_CIHAZLARI.map((c) => (
+                <option key={c.deger} value={c.deger}>
+                  {c.etiket}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       )}
     </div>

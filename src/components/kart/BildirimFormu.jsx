@@ -20,7 +20,7 @@ function DegerGirisi({ id, kriter, deger, setDeger }) {
   }
   if (kriter.tip === 'sayi') {
     return (
-      <input id={id} type="number" inputMode="numeric" min="0" max="999" step="1" value={deger} onChange={(e) => setDeger(e.target.value)} required />
+      <input id={id} type="number" inputMode="decimal" min="0" max="999" step="0.01" value={deger} onChange={(e) => setDeger(e.target.value)} required />
     )
   }
   return <input id={id} type="text" maxLength={200} value={deger} onChange={(e) => setDeger(e.target.value)} required />

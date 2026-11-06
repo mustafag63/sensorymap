@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
-import { nesneKriterleri, degerMetni } from '../../data/kriterler.js'
+import { nesneKriterleri, degerMetni, kriterGorunur } from '../../data/kriterler.js'
 import { durumu } from '../../lib/dizin.js'
 import DurumRozeti from '../DurumRozeti.jsx'
 import { girisIkonu } from './ikonlar.js'
@@ -29,7 +29,9 @@ export default function GirisIsaretcisi({ giris, dizin }) {
         <div className="giris-popup">
           <OdakBaslik>{giris.ad}</OdakBaslik>
           <ul className="kriter-listesi kompakt">
-            {nesneKriterleri('giris').map((k) => {
+            {nesneKriterleri('giris')
+              .filter((k) => kriterGorunur(k, (ad) => dizin.alan('giris', giris.id, ad)))
+              .map((k) => {
               const alan = dizin.alan('giris', giris.id, k.anahtar)
               return (
                 <li key={k.anahtar}>

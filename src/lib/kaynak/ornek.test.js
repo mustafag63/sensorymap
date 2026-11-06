@@ -43,14 +43,14 @@ describe('örnek kaynak: bildirim ve teyit kuralları', () => {
   })
 
   it('doğrulanmış değerle çelişen bildirim değeri silmez, 2 teyitle yer değiştirir', async () => {
-    await kaynak.bildirimGonder({ nesne_turu: 'mekan', nesne_id: 1, alan_adi: 'isik', deger: 'los' })
-    expect(await alan('mekan', 1, 'isik')).toMatchObject({ deger: 'dogal', durum: 'dogrulanmis' })
-    const b = await bekleyen('mekan', 1, 'isik')
+    await kaynak.bildirimGonder({ nesne_turu: 'mekan', nesne_id: 1, alan_adi: 'gun_isigi', deger: 'yok' })
+    expect(await alan('mekan', 1, 'gun_isigi')).toMatchObject({ deger: 'var', durum: 'dogrulanmis' })
+    const b = await bekleyen('mekan', 1, 'gun_isigi')
     kullanici(4)
     await kaynak.teyitEt(b.id)
     kullanici(5)
     await kaynak.teyitEt(b.id)
-    expect(await alan('mekan', 1, 'isik')).toMatchObject({ deger: 'los', durum: 'dogrulanmis' })
+    expect(await alan('mekan', 1, 'gun_isigi')).toMatchObject({ deger: 'yok', durum: 'dogrulanmis' })
   })
 
   it('doğrulanmış değerle aynı bildirim hemen sonuçlanır', async () => {
@@ -58,8 +58,9 @@ describe('örnek kaynak: bildirim ve teyit kuralları', () => {
     expect(await bekleyen('mekan', 1, 'oturma')).toBeUndefined()
   })
 
-  it('gürültü bildirimi ölçüm zamanını kaydeder', async () => {
+  it('gürültü bildirimi ölçüm zamanını kaydeder, cihazı boş bırakır', async () => {
     await kaynak.bildirimGonder({ nesne_turu: 'mekan', nesne_id: 5, alan_adi: 'gurultu_yogun', deger: 'orta' })
+    expect(await alan('mekan', 5, 'gurultu_yogun')).toMatchObject({ olcum_cihazi: null })
     expect((await alan('mekan', 5, 'gurultu_yogun')).olcum_zamani).toBeTruthy()
   })
 
@@ -67,6 +68,13 @@ describe('örnek kaynak: bildirim ve teyit kuralları', () => {
     await expect(kaynak.bildirimGonder({ nesne_turu: 'mekan', nesne_id: 5, alan_adi: 'oturma', deger: 'kalabalik' })).rejects.toThrow()
     await expect(kaynak.bildirimGonder({ nesne_turu: 'mekan', nesne_id: 999, alan_adi: 'oturma', deger: 'seyrek' })).rejects.toThrow()
     await expect(kaynak.hataBildir({ nesne_turu: 'mekan', nesne_id: 1, aciklama: '   ' })).rejects.toThrow()
+  })
+
+  it('ekip gürültü değerini ölçüm cihazıyla kaydeder; ondalıklı sayı kabul edilir', async () => {
+    await kaynak.alanKaydet({ nesne_turu: 'mekan', nesne_id: 5, alan_adi: 'gurultu_sakin', deger: 'sessiz', yerinde: true, olcum_zamani: '2026-11-06T09:00:00.000Z', olcum_cihazi: 'spl_metre' })
+    expect(await alan('mekan', 5, 'gurultu_sakin')).toMatchObject({ durum: 'dogrulanmis', kaynak: 'ekip', olcum_cihazi: 'spl_metre' })
+    await kaynak.alanKaydet({ nesne_turu: 'giris', nesne_id: 4, alan_adi: 'esik_cm', deger: '1.3', yerinde: false })
+    expect(await alan('giris', 4, 'esik_cm')).toMatchObject({ deger: '1.3', durum: 'teyitsiz' })
   })
 
   it('bekleyen bildirimler anonim_id içermez', async () => {

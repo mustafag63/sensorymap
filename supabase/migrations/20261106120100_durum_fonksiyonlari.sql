@@ -40,7 +40,7 @@ create trigger bildirim_hazirla
   for each row execute function public.bildirim_hazirla();
 
 -- ---------------------------------------------------------------
--- Bildirim eklendikten sonra alanı güncelle:
+-- Bildirim eklendikten sonra alanı güncelle (kullanıcı bildiriminde ölçüm cihazı bilinmez):
 --  - alan yok / veri_yok / teyitsiz  → yeni değer, teyitsiz
 --  - doğrulanmış ve aynı değer        → bildirim hemen "dogrulandi"
 --  - doğrulanmış ve farklı değer      → alan değişmez (itiraz; 2 teyit alırsa yer değiştirir)
@@ -58,12 +58,12 @@ begin
    where nesne_turu = new.nesne_turu and nesne_id = new.nesne_id and alan_adi = new.alan_adi;
 
   if not found or mevcut.durum in ('veri_yok', 'teyitsiz') then
-    insert into public.alanlar (nesne_turu, nesne_id, alan_adi, deger, durum, kaynak, olcum_zamani, guncelleme)
+    insert into public.alanlar (nesne_turu, nesne_id, alan_adi, deger, durum, kaynak, olcum_zamani, olcum_cihazi, guncelleme)
     values (new.nesne_turu, new.nesne_id, new.alan_adi, new.deger, 'teyitsiz', 'kullanici',
-            case when new.alan_adi like 'gurultu\_%' then new.tarih end, now())
+            case when new.alan_adi like 'gurultu\_%' then new.tarih end, null, now())
     on conflict (nesne_turu, nesne_id, alan_adi) do update
       set deger = excluded.deger, durum = 'teyitsiz', kaynak = 'kullanici',
-          olcum_zamani = excluded.olcum_zamani, guncelleme = now();
+          olcum_zamani = excluded.olcum_zamani, olcum_cihazi = null, guncelleme = now();
   elsif mevcut.deger = new.deger then
     update public.bildirimler set durum = 'dogrulandi' where id = new.id;
   end if;
@@ -127,12 +127,12 @@ begin
 
   if sayi >= 2 and b.durum = 'bekliyor' then
     update public.bildirimler set durum = 'dogrulandi' where id = b.id;
-    insert into public.alanlar (nesne_turu, nesne_id, alan_adi, deger, durum, kaynak, olcum_zamani, guncelleme)
+    insert into public.alanlar (nesne_turu, nesne_id, alan_adi, deger, durum, kaynak, olcum_zamani, olcum_cihazi, guncelleme)
     values (b.nesne_turu, b.nesne_id, b.alan_adi, b.deger, 'dogrulanmis', 'kullanici',
-            case when b.alan_adi like 'gurultu\_%' then b.tarih end, now())
+            case when b.alan_adi like 'gurultu\_%' then b.tarih end, null, now())
     on conflict (nesne_turu, nesne_id, alan_adi) do update
       set deger = excluded.deger, durum = 'dogrulanmis', kaynak = 'kullanici',
-          olcum_zamani = excluded.olcum_zamani, guncelleme = now();
+          olcum_zamani = excluded.olcum_zamani, olcum_cihazi = null, guncelleme = now();
   end if;
   return null;
 end;
