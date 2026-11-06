@@ -4,6 +4,7 @@ import Duzen from './components/Duzen.jsx'
 import HaritaSayfasi from './pages/HaritaSayfasi.jsx'
 import BulunamadiSayfasi from './pages/BulunamadiSayfasi.jsx'
 import MekanKarti from './components/kart/MekanKarti.jsx'
+import PanelSayfasi from './pages/PanelSayfasi.jsx'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
             <Route path="/" element={<HaritaSayfasi />}>
               <Route path="mekan/:id" element={<MekanKarti />} />
             </Route>
+            <Route path="panel" element={<PanelSayfasi />} />
             <Route path="*" element={<BulunamadiSayfasi />} />
           </Route>
         </Routes>

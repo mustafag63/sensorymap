@@ -886,3 +886,136 @@ textarea {
 .basari-mesaji:empty {
   margin: 0;
 }
+
+/* ---------- Ekip paneli ---------- */
+.panel-sayfasi {
+  max-width: 60rem;
+}
+
+.uyari-kutusu {
+  padding: 0.6rem 0.8rem;
+  background: var(--sari-zemin);
+  color: var(--sari-metin);
+  border: 2px solid var(--sari-cizgi);
+  border-radius: 6px;
+}
+
+.giris-formu {
+  max-width: 24rem;
+}
+
+.panel-oturum {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.bolum-secici {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.bolum-secici .dugme {
+  background: #fff;
+  color: var(--mavi);
+}
+
+.bolum-secici .dugme[aria-pressed='true'] {
+  background: var(--mavi);
+  color: #fff;
+}
+
+.kayit-formu fieldset,
+.konum-secici {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  border: 1px solid #d5d7db;
+  border-radius: 8px;
+}
+
+.kayit-formu legend {
+  padding: 0 0.25rem;
+  font-weight: 700;
+}
+
+.konum-haritasi {
+  height: 18rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--cizgi);
+}
+
+.konum-alanlari {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+}
+
+.isaret-konum {
+  background: #8b1a1a;
+  border-color: #8b1a1a;
+  color: #fff;
+  cursor: grab;
+}
+
+.kriter-duzenleyici {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(10rem, 1fr) auto;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.kriter-duzenleyici .form-alani {
+  grid-column: 2 / -1;
+  margin: 0;
+}
+
+.panel-listesi {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panel-listesi > li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.panel-listesi p {
+  margin: 0.15rem 0;
+}
+
+.panel-liste-baslik {
+  font-weight: 700;
+}
+
+.tablo-kapsayici {
+  overflow-x: auto;
+}
+
+.panel-tablosu {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.panel-tablosu th,
+.panel-tablosu td {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid #e3e3e3;
+  text-align: left;
+  vertical-align: top;
+}
+
+@media (max-width: 700px) {
+  .kriter-duzenleyici {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kriter-duzenleyici .form-alani {
+    grid-column: auto;
+  }
+}

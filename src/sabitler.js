@@ -149,6 +149,15 @@ export const METIN = {
     cozulduEtiket: 'Çözüldü',
     bekleyenYok: 'Bekleyen bildirim yok.',
     teyit: (n) => `${n}/2 teyit`,
+    bolumler: 'Panel bölümleri',
+    yeniKayit: 'Yeni kayıt',
+    binalar: 'Binalar',
+    girisler: 'Girişler',
+    mekanlar: 'Mekânlar',
+    konumIsaretci: 'Seçilen konum',
+    sutun: { kayit: 'Kayıt', kriter: 'Kriter', deger: 'Değer', tarih: 'Tarih', teyit: 'Teyit', aciklama: 'Açıklama', durum: 'Durum' },
+    acik: 'Açık',
+    kartiAc: 'Kartı aç',
   },
 
   // Veri katmanının fırlattığı hatalar (iki kaynakta da aynı metin).

@@ -13,6 +13,7 @@ export function dizinOlustur({ binalar = [], girisler = [], mekanlar = [], alanl
   const alanMap = new Map(alanlar.map((a) => [`${a.nesne_turu}:${a.nesne_id}:${a.alan_adi}`, a]))
   const binaMap = new Map(binalar.map((b) => [b.id, b]))
   const mekanMap = new Map(mekanlar.map((m) => [m.id, m]))
+  const girisMap = new Map(girisler.map((g) => [g.id, g]))
   const binaGirisleri = grupla(girisler, 'bina_id')
   const binaMekanlari = grupla(mekanlar, 'bina_id')
 
@@ -20,6 +21,8 @@ export function dizinOlustur({ binalar = [], girisler = [], mekanlar = [], alanl
     binalar,
     girisler,
     mekanlar,
+    bekleyenBildirimler,
+    giris: (id) => girisMap.get(id) ?? null,
     bina: (id) => binaMap.get(id) ?? null,
     mekan: (id) => mekanMap.get(id) ?? null,
     /** Satır yoksa null döner; çağıran bunu "veri_yok" sayar. */

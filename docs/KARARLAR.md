@@ -37,3 +37,9 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Kullanıcı kendi bildiriminde düğme yerine "Bu bildirimi siz yaptınız" notunu, daha önce teyit ettiği bildirimde "Teyit ettiniz" notunu görür.
 - Teyit ya da bildirim sonrası sonuç metni satırda/canlı bölgede gösterilir ve odak oraya taşınır (değer doğrulanınca düğme kalkar, odak kaybolmasın diye).
 - Bildirim sonrası mesaj, gönderim anındaki alan durumuna göre seçilir (yeni / zaten doğrulanmış / itiraz).
+- Panelde silme yok (SPEC yalnızca ekle/düzenle diyor); silme gerekirse Supabase tablo editöründen yapılır, bağlı kayıtları trigger temizler.
+- Panel bölümleri (kayıtlar / hatalar / bekleyen) `aria-pressed` düğmelerle seçilir; ok tuşlu sekme (tablist) davranışı yerine basit düğme grubu.
+- Konum seçicide sürüklemeye alternatif olarak enlem/boylam sayı alanları var (WCAG 2.5.7); koordinatlar 6 ondalığa yuvarlanır.
+- Panelde yalnızca değiştirilen kriterler kaydedilir; değer boşaltılırsa alan `veri_yok` olur. "Yerinde doğrulandı" değer seçilmeden işaretlenemez.
+- Ölçüm zamanı tarayıcının yerel saatiyle girilir ve ISO (UTC) olarak saklanır.
+- Supabase'de giriş yapan hesap `ekip_uyeleri`'nde değilse panel "ekip üyesi değil" uyarısı ve çıkış düğmesi gösterir.
