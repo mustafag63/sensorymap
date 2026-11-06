@@ -25,3 +25,9 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - "Önerilen giriş" puanı: basamaksız (4) + uygun rampa (2) + otomatik kapı (1) − acil çıkış (1); teyitsiz bilgi yarım puan alır, puanı 0 olan giriş "önerilen" diye etiketlenmez.
 - Kart, yan panel/bottom sheet olarak harita üzerinde açılır ve modal değildir (odak kapanı yok); Esc ve "Kapat" haritaya döner, odak kartı açan öğeye geri verilir.
 - Mobil kırılım noktası 700 px'tir.
+- "Harita / Liste" geçişi ikisinden birini gösterir (yan yana değil); seçim URL'de `g=liste`, "Uygun olmayanları da göster" `hepsi=1` olarak saklanır. Filtreler `?f=` içinde virgülle, kodlanmadan yazılır.
+- "Uygun değil" mekânlar listede varsayılan gizli, haritada ise soluk (gri, ince kenar) gösterilir; metin kontrastı yine AA'yı sağlar.
+- Teyitsiz ama filtreye UYMAYAN değer (ör. teyitsiz "gürültülü") de "Bilgi eksik" sayılır; yalnızca doğrulanmış değer "Uygun değil" yapar.
+- Giriş filtrelerinde bina girişi hiç yoksa sonuç "Bilgi eksik"tir; tüm girişler doğrulanmış şekilde sağlamıyorsa "Uygun değil".
+- Liste görünümüne geçince harita kaldırılır; haritaya dönünce zoom varsayılana döner.
+- `src/lib/kriterler.test.js`, kriterler.js'deki seçeneklerin migration'daki `gecerli_kriter()` ile aynı olduğunu denetler.
