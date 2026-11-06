@@ -1108,3 +1108,11 @@ textarea {
     grid-column: auto;
   }
 }
+
+.giris-uyarisi {
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 4px solid var(--sari-cizgi);
+  background: var(--sari-zemin);
+  font-weight: 600;
+}

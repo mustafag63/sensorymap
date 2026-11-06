@@ -154,7 +154,7 @@ Gürültü filtresi yoğun saat değerini kullanır (temkinli tercih). Sakin saa
 
 ### 5.3 Mekân kartı
 1. Üst: ad, tür, bina, kat, son güncelleme tarihi.
-2. **Binaya nasıl girilir:** binanın girişleri, en erişilebilirden başlayarak: önce doğrulanmış basamaksız, sonra doğrulanmış uygun rampalı, sonra diğerleri. En üstteki "Önerilen giriş" olarak işaretlenir.
+2. **Binaya nasıl girilir:** binanın girişleri, en erişilebilirden başlayarak: önce doğrulanmış basamaksız, sonra doğrulanmış uygun rampalı, sonra diğerleri. En üstteki giriş yalnızca doğrulanmış basamaksız ya da doğrulanmış uygun rampalıysa "Önerilen giriş" olarak işaretlenir; böyle bir giriş yoksa etiket verilmez ve girişlerin üstünde "Bu bina için doğrulanmış erişilebilir giriş bilgisi yok" yazar.
 3. **Fiziksel:** asansör, iç kapı, erişilebilir WC — her biri durum rozetiyle.
 4. **Duyusal:** gürültü (yoğun / sakin saat + ölçüm zamanı), ışık, oturma, sessiz alan, müzik — durum rozetiyle.
 5. Eylemler: "Bilgi ekle / düzelt" (bildirim formu), "Bu bilgiyi teyit et" (her teyitsiz değerin yanında), "Hatalı bilgi bildir", "Ortam sesini ölç" (4. haftada Ali'nin modülü; şimdilik devre dışı düğme + açıklama).

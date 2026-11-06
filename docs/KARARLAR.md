@@ -52,7 +52,7 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 
 ## Nergis Zeynep'in kesin kriter listesi (2026-11-06)
 
-`docs/kriterler-nergis.md` repoya eklenmediği için güncelleme, bu listenin özetine ve eşleştirme kararlarına dayanarak yapıldı. Dosya eklenince karşılaştırılmalı.
+Güncelleme listenin özetine ve eşleştirme kararlarına dayanarak yapıldı. `docs/kriterler-nergis.md` sonradan eklendi; kriterler.js ile karşılaştırmada çıkan farklar ekibin kararını bekliyor (henüz koda yansıtılmadı).
 
 **Değişen kriterler**
 - Giriş: `giris_turu` → ana / yan / erisilebilir_alternatif (acil_cikis kalktı).
@@ -73,7 +73,7 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 
 **Uygulama kararları**
 - Migration'lar henüz hiçbir veritabanına uygulanmadığı için yeni migration yazılmadı, mevcut dosyalar yerinde güncellendi. Supabase'e uygulandıktan sonraki değişiklikler yeni migration dosyalarıyla yapılacak.
-- Önerilen giriş sırası: doğrulanmış basamaksız → doğrulanmış (rampa_var = var ve rampa_durumu = uygun) → diğerleri; grup içinde kayıt sırası korunur. İstendiği gibi en üstteki giriş her zaman "Önerilen giriş" olarak işaretlenir (hiçbir giriş ilk iki gruba girmese bile).
+- Önerilen giriş sırası: doğrulanmış basamaksız → doğrulanmış (rampa_var = var ve rampa_durumu = uygun) → diğerleri; grup içinde kayıt sırası korunur. En üstteki giriş yalnızca doğrulanmış basamaksız ya da doğrulanmış uygun rampalıysa "Önerilen giriş" olarak işaretlenir; yoksa etiket verilmez ve girişlerin üstünde "Bu bina için doğrulanmış erişilebilir giriş bilgisi yok" yazar (2026-11-06, Mustafa'nın kararı).
 - Bağlı alanlar: rampa ayrıntıları `rampa_var = var`, asansör ayrıntıları `asansor_var = var` değilse kartta ve giriş popup'ında gizlenir. Üst alan bilinmiyorsa ya da bağlı alanın kendi verisi varsa gösterilir.
 - Sınır dışı sayılar kartta uyarıyla gösterilir: eşik > 1,3 cm, kapı / asansör kapısı / mekân kapısı < 90 cm, rampa genişliği < 100 cm.
 - `olcum_cihazi` seçenekleri `ses_modulu` (telefon) ve `spl_metre` olarak varsayıldı (SPEC'teki "ses modülü veya SPL metre" ifadesinden); Nergis'in listesinde seçenekler belirtilmemişti. Kullanıcı bildirimlerinde boş kalır, ekip panelden girer.

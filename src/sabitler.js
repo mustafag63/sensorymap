@@ -67,6 +67,7 @@ export const METIN = {
     sonGuncelleme: 'Son güncelleme',
     nasilGirilir: 'Binaya nasıl girilir',
     onerilenGiris: 'Önerilen giriş',
+    dogrulanmisGirisYok: 'Bu bina için doğrulanmış erişilebilir giriş bilgisi yok',
     girisYok: 'Bu bina için giriş bilgisi yok.',
     fiziksel: 'Fiziksel',
     duyusal: 'Duyusal',

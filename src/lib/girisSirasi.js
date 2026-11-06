@@ -12,10 +12,13 @@ export function girisSirasi(giris, dizin) {
   return 2
 }
 
-/** @returns {Array<{ giris, sira: 0|1|2, onerilen: boolean }>} En üstteki "Önerilen giriş"tir. */
+/**
+ * @returns {Array<{ giris, sira: 0|1|2, onerilen: boolean }>}
+ * En üstteki giriş yalnızca doğrulanmış basamaksız ya da doğrulanmış uygun rampalıysa "Önerilen giriş"tir.
+ */
 export function girisleriSirala(girisler, dizin) {
   return girisler
     .map((giris) => ({ giris, sira: girisSirasi(giris, dizin) }))
     .sort((a, b) => a.sira - b.sira)
-    .map((x, i) => ({ ...x, onerilen: i === 0 }))
+    .map((x, i) => ({ ...x, onerilen: i === 0 && x.sira < 2 }))
 }

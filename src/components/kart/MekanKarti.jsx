@@ -90,6 +90,9 @@ export default function MekanKarti() {
           <section aria-labelledby="kart-giris">
             <h3 id="kart-giris">{METIN.kart.nasilGirilir}</h3>
             {girisler.length === 0 && <p>{METIN.kart.girisYok}</p>}
+            {girisler.length > 0 && !girisler.some((x) => x.onerilen) && (
+              <p className="kriter-uyari giris-uyarisi">{METIN.kart.dogrulanmisGirisYok}</p>
+            )}
             {girisler.map(({ giris, onerilen }) => (
               <article key={giris.id} className="giris-blogu" aria-labelledby={`giris-${giris.id}`}>
                 <h4 id={`giris-${giris.id}`}>
