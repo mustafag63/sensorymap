@@ -21,3 +21,7 @@ SPEC.md'de yazmayan konularda verilen kararlar (en basit çözüm).
 - Giriş işaretçisine tıklanınca girişin kriterlerini rozetleriyle gösteren bir popup açılır (SPEC'te giriş tıklaması tanımlı değil).
 - Bina popup'ına "Yakınlaştır" düğmesi eklendi: tek adımda zoom 18'e geçip mekânları gösterir.
 - Örnek koordinatlar işaretçiler zoom 18'de çakışmasın diye 40–100 m aralıklarla yayıldı.
+- Kart, veri olmayan kriterleri de "– Veri yok" rozetiyle listeler; neyin eksik olduğu görünür olsun diye.
+- "Önerilen giriş" puanı: basamaksız (4) + uygun rampa (2) + otomatik kapı (1) − acil çıkış (1); teyitsiz bilgi yarım puan alır, puanı 0 olan giriş "önerilen" diye etiketlenmez.
+- Kart, yan panel/bottom sheet olarak harita üzerinde açılır ve modal değildir (odak kapanı yok); Esc ve "Kapat" haritaya döner, odak kartı açan öğeye geri verilir.
+- Mobil kırılım noktası 700 px'tir.
