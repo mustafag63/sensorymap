@@ -1,0 +1,111 @@
+:root {
+  --header-bg: #1f3a5f;
+  --header-fg: #ffffff;
+  --focus: #ffbf47;
+  --header-height: 3.5rem;
+
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.app-header {
+  flex: 0 0 var(--header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background: var(--header-bg);
+  color: var(--header-fg);
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.app-main:focus {
+  outline: none;
+}
+
+.campus-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Görünür odak göstergesi (WCAG 2.4.7 / 2.4.11) */
+:focus-visible,
+.leaflet-container a:focus-visible,
+.leaflet-container:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Yakınlaştırma düğmeleri: en az 24x24 px hedef (WCAG 2.5.8) */
+.leaflet-touch .leaflet-bar a,
+.leaflet-bar a {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 1.4rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -100px;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background: var(--focus);
+  color: #000;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaflet-zoom-anim .leaflet-zoom-animated,
+  .leaflet-fade-anim .leaflet-tile {
+    transition: none !important;
+  }
+}
